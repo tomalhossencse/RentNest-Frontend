@@ -1,8 +1,10 @@
-import React from 'react'
+import LoginFrom from '../_components/LoginForm'
 
 const LoginPage = () => {
     return (
-        <div>LoginPage</div>
+        <div className="flex min-h-screen items-center justify-center bg-primary/10">
+            <LoginFrom />
+        </div>
     )
 }
 
