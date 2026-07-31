@@ -1,8 +1,10 @@
-import React from 'react'
 
-const HomePage = () => {
+const HomePage = async () => {
+
     return (
-        <div>HomePage</div>
+        <div>
+            <h1>This is HomePage</h1>
+        </div>
     )
 }
 
