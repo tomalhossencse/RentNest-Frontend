@@ -4,6 +4,17 @@ import { useEffect, useRef, useState, } from "react";
 import { Search, MapPin, Home, SlidersHorizontal } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { ArrowUpDown, Check, ChevronsUpDown } from 'lucide-react'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+
 import {
     Select,
     SelectContent,
@@ -22,9 +33,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Division } from "@/lib/types";
 
 
-
 const categories = ["Apartment", "House", "Studio", "Office", "Shop", "Warehouse", "Room", "Stadium"]
-
 
 const DIVISION_DISTRICT_MAP = {
     DHAKA: [
@@ -109,6 +118,17 @@ const DIVISION_DISTRICT_MAP = {
     ],
 } as const;
 
+const SORT_OPTIONS = [
+    { label: 'Date Added (Newest)', sortBy: 'createdAt', sortOrder: 'dsc' },
+    { label: 'Date Added (Oldest)', sortBy: 'createdAt', sortOrder: 'asc' },
+    { label: 'Rent (Low to High)', sortBy: 'monthlyRent', sortOrder: 'asc' },
+    { label: 'Rent (High to Low)', sortBy: 'monthlyRent', sortOrder: 'dsc' },
+    { label: 'Title (A to Z)', sortBy: 'title', sortOrder: 'asc' },
+    { label: 'Title (Z to A)', sortBy: 'title', sortOrder: 'dsc' },
+    { label: 'Available Date (Earliest)', sortBy: 'availableFrom', sortOrder: 'asc' },
+    { label: 'Available Date (Latest)', sortBy: 'availableFrom', sortOrder: 'dsc' },
+] as const
+
 
 export function PropertySearchBar() {
     const searchParams = useSearchParams();
@@ -123,6 +143,10 @@ export function PropertySearchBar() {
     const minRent = (Number(searchParams.get("minRent"))) ?? 5000;
     const maxRent = (Number(searchParams.get("maxRent"))) ?? 100000;
     const [priceRange, setPriceRange] = useState<[number, number]>([minRent, maxRent])
+
+    const currentSortBy = searchParams.get('sortBy') || 'createdAt'
+    const currentSortOrder = searchParams.get('sortOrder') || 'dsc'
+
 
     useEffect(() => {
         setPriceRange([
@@ -155,6 +179,8 @@ export function PropertySearchBar() {
 
     };
 
+
+
     const handleChange = (key: string, value: string) => {
 
         const params = new URLSearchParams(searchParams.toString())
@@ -173,7 +199,7 @@ export function PropertySearchBar() {
 
     };
 
-    const updateUrlParams = (updates: Record<string, string | null>) => {
+    const handlePriceChange = (updates: Record<string, string | null>) => {
         const params = new URLSearchParams(searchParams.toString())
 
         Object.entries(updates).forEach(([key, value]) => {
@@ -190,6 +216,21 @@ export function PropertySearchBar() {
 
         router.replace(`${pathname}?${params.toString()}`)
     }
+
+
+    const handleSortChange = (sortBy: string, sortOrder: string) => {
+        const params = new URLSearchParams(searchParams.toString())
+
+        params.set('sortBy', sortBy)
+        params.set('sortOrder', sortOrder)
+        params.set('page', '1')
+
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false })
+    }
+
+    const activeOption = SORT_OPTIONS.find(
+        (opt) => opt.sortBy === currentSortBy && opt.sortOrder === currentSortOrder
+    )
 
     return (
         <div className="w-full rounded-2xl border border-border/60 bg-card p-3 shadow-lg backdrop-blur-md dark:bg-card/90">
@@ -266,6 +307,7 @@ export function PropertySearchBar() {
                     </Select>
                 </div>
 
+
                 {/* Filter Popover Trigger - FIXED HERE */}
                 <div className="md:col-span-2">
                     <Popover>
@@ -277,7 +319,7 @@ export function PropertySearchBar() {
                         >
                             <div className="flex items-center gap-2 truncate">
                                 <SlidersHorizontal className="h-4 w-4 shrink-0" />
-                                <span>Filters</span>
+                                <span>Filters & Sorting</span>
                             </div>
                         </PopoverTrigger>
                         <PopoverContent className="w-80 p-5 space-y-5" align="start">
@@ -297,7 +339,7 @@ export function PropertySearchBar() {
                                     onValueChange={(value) => setPriceRange(value as [number, number])}
                                     onValueCommitted={(value) => {
                                         const [min, max] = value as [number, number];
-                                        updateUrlParams({
+                                        handlePriceChange({
                                             minRent: min.toString(),
                                             maxRent: max.toString(),
                                         });
@@ -326,6 +368,57 @@ export function PropertySearchBar() {
                                     ))}
                                 </div>
                             </div>
+
+                            {/* sorting */}
+                            <DropdownMenu>
+                                <DropdownMenuTrigger
+                                    className={cn(
+                                        buttonVariants({ variant: "outline" }),
+                                        "h-11 w-full justify-between border-neutral-800 bg-neutral-900/60 text-xs font-medium text-neutral-300 hover:bg-neutral-800 hover:text-white md:w-55"
+                                    )}
+                                >
+                                    <div className="flex items-center gap-2 truncate">
+                                        <ArrowUpDown className="h-4 w-4 shrink-0 text-neutral-400" />
+                                        <span className="truncate">{activeOption ? activeOption.label : 'Sort by'}</span>
+                                    </div>
+                                    <ChevronsUpDown className="h-4 w-4 shrink-0 text-neutral-500" />
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent
+                                    className="w-60 border-neutral-800 bg-neutral-950 text-neutral-200"
+                                    align="end"
+                                >
+                                    <DropdownMenuGroup>
+                                        <DropdownMenuLabel className="text-xs font-semibold text-neutral-400">
+                                            Sort Properties
+                                        </DropdownMenuLabel>
+                                    </DropdownMenuGroup>
+
+                                    <DropdownMenuSeparator className="bg-neutral-800" />
+
+                                    <DropdownMenuGroup>
+                                        {SORT_OPTIONS.map((option) => {
+                                            const isSelected =
+                                                currentSortBy === option.sortBy && currentSortOrder === option.sortOrder
+
+                                            return (
+                                                <DropdownMenuItem
+                                                    key={`${option.sortBy}-${option.sortOrder}`}
+                                                    onClick={() => handleSortChange(option.sortBy, option.sortOrder)}
+                                                    className={cn(
+                                                        "cursor-pointer text-xs font-medium focus:bg-neutral-900 focus:text-white",
+                                                        isSelected && "bg-neutral-900 text-white font-semibold"
+                                                    )}
+                                                >
+                                                    <div className="flex w-full items-center justify-between">
+                                                        <span>{option.label}</span>
+                                                        {isSelected && <Check className="h-3.5 w-3.5 text-white" />}
+                                                    </div>
+                                                </DropdownMenuItem>
+                                            )
+                                        })}
+                                    </DropdownMenuGroup>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
                         </PopoverContent>
                     </Popover>
                 </div>
