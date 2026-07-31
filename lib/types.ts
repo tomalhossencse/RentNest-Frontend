@@ -56,6 +56,7 @@ export interface PropertyCategory {
 
 
 export type PropertyStatus = "AVAILABLE" | "RENTED" | "INACTIVE";
+
 export type Division =
     | "DHAKA"
     | "CHATTOGRAM"
