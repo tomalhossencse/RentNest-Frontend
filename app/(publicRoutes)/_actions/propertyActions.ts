@@ -12,8 +12,8 @@ type NewsQuery = {
     minRent?: string | string[];
     maxRent?: string | string[];
     floor?: string | string[];
-    // sortBy?: string | string[];
-    // sortOrder?: string | string[];
+    sortBy?: string | string[];
+    sortOrder?: string | string[];
 };
 export const getProperties = async ({
     query,
@@ -32,6 +32,8 @@ export const getProperties = async ({
     const minRent = Array.isArray(query?.minRent) ? query.minRent[0] : query?.minRent;
     const maxRent = Array.isArray(query?.maxRent) ? query.maxRent[0] : query?.maxRent;
     const floor = Array.isArray(query?.floor) ? query.floor[0] : query?.floor;
+    const sortBy = Array.isArray(query?.sortBy) ? query.sortBy[0] : query?.sortBy;
+    const sortOrder = Array.isArray(query?.sortOrder) ? query.sortOrder[0] : query?.sortOrder;
 
     if (searchTerm) params.set("searchTerm", searchTerm);
     if (page) params.set("page", page);
@@ -40,6 +42,8 @@ export const getProperties = async ({
     if (district) params.set("district", district);
     if (minRent) params.set("minRent", minRent);
     if (maxRent) params.set("maxRent", maxRent);
+    if (sortOrder) params.set("sortOrder", sortOrder);
+    if (sortBy) params.set("sortBy", sortBy);
     if (floor && floor !== "any") params.set("floor", floor);
 
 

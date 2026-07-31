@@ -35,6 +35,7 @@ import { Division } from "@/lib/types";
 
 const categories = ["Apartment", "House", "Studio", "Office", "Shop", "Warehouse", "Room", "Stadium"]
 
+
 const DIVISION_DISTRICT_MAP = {
     DHAKA: [
         "DHAKA",
@@ -119,14 +120,14 @@ const DIVISION_DISTRICT_MAP = {
 } as const;
 
 const SORT_OPTIONS = [
-    { label: 'Date Added (Newest)', sortBy: 'createdAt', sortOrder: 'dsc' },
+    { label: 'Date Added (Newest)', sortBy: 'createdAt', sortOrder: 'desc' },
     { label: 'Date Added (Oldest)', sortBy: 'createdAt', sortOrder: 'asc' },
     { label: 'Rent (Low to High)', sortBy: 'monthlyRent', sortOrder: 'asc' },
-    { label: 'Rent (High to Low)', sortBy: 'monthlyRent', sortOrder: 'dsc' },
+    { label: 'Rent (High to Low)', sortBy: 'monthlyRent', sortOrder: 'desc' },
     { label: 'Title (A to Z)', sortBy: 'title', sortOrder: 'asc' },
-    { label: 'Title (Z to A)', sortBy: 'title', sortOrder: 'dsc' },
+    { label: 'Title (Z to A)', sortBy: 'title', sortOrder: 'desc' },
     { label: 'Available Date (Earliest)', sortBy: 'availableFrom', sortOrder: 'asc' },
-    { label: 'Available Date (Latest)', sortBy: 'availableFrom', sortOrder: 'dsc' },
+    { label: 'Available Date (Latest)', sortBy: 'availableFrom', sortOrder: 'desc' },
 ] as const
 
 
@@ -147,6 +148,9 @@ export function PropertySearchBar() {
     const currentSortBy = searchParams.get('sortBy') || 'createdAt'
     const currentSortOrder = searchParams.get('sortOrder') || 'dsc'
 
+    const activeOption = SORT_OPTIONS.find(
+        (opt) => opt.sortBy === currentSortBy && opt.sortOrder === currentSortOrder
+    )
 
     useEffect(() => {
         setPriceRange([
@@ -178,7 +182,6 @@ export function PropertySearchBar() {
         }, 500)
 
     };
-
 
 
     const handleChange = (key: string, value: string) => {
@@ -228,9 +231,6 @@ export function PropertySearchBar() {
         router.replace(`${pathname}?${params.toString()}`, { scroll: false })
     }
 
-    const activeOption = SORT_OPTIONS.find(
-        (opt) => opt.sortBy === currentSortBy && opt.sortOrder === currentSortOrder
-    )
 
     return (
         <div className="w-full rounded-2xl border border-border/60 bg-card p-3 shadow-lg backdrop-blur-md dark:bg-card/90">
@@ -307,7 +307,6 @@ export function PropertySearchBar() {
                     </Select>
                 </div>
 
-
                 {/* Filter Popover Trigger - FIXED HERE */}
                 <div className="md:col-span-2">
                     <Popover>
@@ -323,51 +322,6 @@ export function PropertySearchBar() {
                             </div>
                         </PopoverTrigger>
                         <PopoverContent className="w-80 p-5 space-y-5" align="start">
-                            {/* Price Range Slider */}
-                            <div className="space-y-3">
-                                <div className="flex items-center justify-between text-xs font-semibold">
-                                    <span className="text-muted-foreground">Price Range (BDT)</span>
-                                    <span className="font-mono text-primary">
-                                        ৳{priceRange[0].toLocaleString()} - ৳{priceRange[1].toLocaleString()}
-                                    </span>
-                                </div>
-                                <Slider
-                                    min={2000}
-                                    max={200000}
-                                    step={1000}
-                                    value={priceRange}
-                                    onValueChange={(value) => setPriceRange(value as [number, number])}
-                                    onValueCommitted={(value) => {
-                                        const [min, max] = value as [number, number];
-                                        handlePriceChange({
-                                            minRent: min.toString(),
-                                            maxRent: max.toString(),
-                                        });
-                                    }}
-                                    className="py-2"
-                                />
-                            </div>
-
-                            {/* Bedrooms Filter */}
-                            <div className="space-y-2">
-                                <label className="text-xs font-semibold text-muted-foreground">
-                                    Floors
-                                </label>
-                                <div className="grid grid-cols-5 gap-1.5">
-                                    {["any", "1", "2", "3", "4"].map((floor) => (
-                                        <Button
-                                            key={floor}
-                                            type="button"
-                                            size="sm"
-                                            variant={searchParams.get('floor') === floor ? "default" : "outline"}
-                                            onClick={() => handleChange("floor", floor)}
-                                            className="h-8 text-xs font-medium capitalize"
-                                        >
-                                            {floor}
-                                        </Button>
-                                    ))}
-                                </div>
-                            </div>
 
                             {/* sorting */}
                             <DropdownMenu>
@@ -419,6 +373,54 @@ export function PropertySearchBar() {
                                     </DropdownMenuGroup>
                                 </DropdownMenuContent>
                             </DropdownMenu>
+
+                            {/* Price Range Slider */}
+                            <div className="space-y-3">
+                                <div className="flex items-center justify-between text-xs font-semibold">
+                                    <span className="text-muted-foreground">Price Range (BDT)</span>
+                                    <span className="font-mono text-primary">
+                                        ৳{priceRange[0].toLocaleString()} - ৳{priceRange[1].toLocaleString()}
+                                    </span>
+                                </div>
+                                <Slider
+                                    min={2000}
+                                    max={200000}
+                                    step={1000}
+                                    value={priceRange}
+                                    onValueChange={(value) => setPriceRange(value as [number, number])}
+                                    onValueCommitted={(value) => {
+                                        const [min, max] = value as [number, number];
+                                        handlePriceChange({
+                                            minRent: min.toString(),
+                                            maxRent: max.toString(),
+                                        });
+                                    }}
+                                    className="py-2"
+                                />
+                            </div>
+
+                            {/* Bedrooms Filter */}
+                            <div className="space-y-2">
+                                <label className="text-xs font-semibold text-muted-foreground">
+                                    Floors
+                                </label>
+                                <div className="grid grid-cols-5 gap-1.5">
+                                    {["any", "1", "2", "3", "4"].map((floor) => (
+                                        <Button
+                                            key={floor}
+                                            type="button"
+                                            size="sm"
+                                            variant={searchParams.get('floor') === floor ? "default" : "outline"}
+                                            onClick={() => handleChange("floor", floor)}
+                                            className="h-8 text-xs font-medium capitalize"
+                                        >
+                                            {floor}
+                                        </Button>
+                                    ))}
+                                </div>
+                            </div>
+
+
                         </PopoverContent>
                     </Popover>
                 </div>
