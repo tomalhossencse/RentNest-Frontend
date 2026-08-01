@@ -20,6 +20,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
 import { getPropertyById } from "../../_actions/propertyActions"
+import { formattedAvailableDate, formattedRentFn } from "@/utils"
 
 const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80"
 
@@ -36,18 +37,9 @@ export default async function PropertyDetailsPage({
         notFound()
     }
 
-    const formattedRent = new Intl.NumberFormat("en-BD").format(
-        Number(property.monthlyRent) || 0
-    )
+    const formattedRent = formattedRentFn(property.monthlyRent)
 
-    const availableDate = new Date(property.availableFrom).toLocaleDateString(
-        "en-GB",
-        {
-            day: "numeric",
-            month: "short",
-            year: "numeric",
-        }
-    )
+    const availableDate = formattedAvailableDate(property.availableFrom)
 
     return (
         <div className="min-h-screen bg-background text-foreground pb-12 pt-6 transition-colors duration-200">

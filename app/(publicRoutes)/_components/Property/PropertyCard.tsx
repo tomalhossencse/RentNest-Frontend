@@ -15,6 +15,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { PropertyCardProps } from "@/lib/types";
 import { Building2, CalendarDays, MapPin, User } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { formattedAvailableDate, formattedRentFn } from "@/utils";
 
 const FALLBACK_IMAGE =
     "https://images.unsplash.com/photo-1568605114967-8130f3a36994?fm=jpg&q=60&w=3000&auto=format&fit=crop";
@@ -22,13 +23,9 @@ const FALLBACK_IMAGE =
 const PropertyCard = ({ property }: PropertyCardProps) => {
 
 
-    const formattedDate = new Date(property.availableFrom).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-    });
+    const formattedDate = formattedAvailableDate(property.availableFrom)
 
-    const formattedRent = Number(property.monthlyRent || 0).toLocaleString();
+    const formattedRent = formattedRentFn(property.monthlyRent)
 
     return (
         <Card className="group overflow-hidden rounded-xl border bg-card shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md pt-0">

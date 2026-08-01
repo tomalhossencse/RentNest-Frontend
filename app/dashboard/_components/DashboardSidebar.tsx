@@ -10,7 +10,7 @@ const NAV_ITEMS = [
     { label: "Dashboard", href: "/dashboard", icon: Home },
     { label: "My Properties", href: "/dashboard/properties", icon: Building2 },
     { label: "Landlord Requests", href: "/dashboard/requests", icon: FileText },
-    { label: "Tenant Requests", href: "/dashboard/tenant-requests", icon: CreditCard },
+    { label: "Tenant Requests", href: "/dashboard/tenant/requests", icon: CreditCard },
     { label: "Admin Panel", href: "/dashboard/admin", icon: ShieldCheck },
     { label: "Settings", href: "/dashboard/settings", icon: Settings },
 ]

@@ -101,3 +101,34 @@ export type PropertyCardProps = {
     property: IProperty;
 };
 
+export type RentalRequestStatus =
+    | "PENDING"
+    | "APPROVED"
+    | "REJECTED"
+    | "PAID"
+    | "CANCELLED";
+
+export interface PropertyCategory {
+    name: string;
+}
+
+export interface NestedPropertyDetails {
+    title: string;
+    address: string;
+    monthlyRent: string; // Note: String type to match JSON ("24000")
+    category: PropertyCategory;
+}
+
+export interface IRentalRequest {
+    id: string;
+    propertyId: string;
+    tenantId: string;
+    moveInDate: string; // ISO Date String
+    status: RentalRequestStatus;
+    message: string;
+    createdAt: string; // ISO Date String
+    updatedAt: string; // ISO Date String
+    property: NestedPropertyDetails;
+}
+export type IRentalRequests = IRentalRequest[]
+
