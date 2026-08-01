@@ -49,3 +49,29 @@ export const addRequests = async (data: RentalRequestFormData, propertyId: strin
 
     return result;
 };
+
+export const getLandlordRequests = async () => {
+    const cookieStore = await cookies();
+
+    const accessToken = cookieStore.get("accessToken")?.value;
+
+    const res = await fetch(
+        `${process.env.BACKEND_API_URL}/api/requests/landlord`,
+        {
+            headers: {
+                Cookie: `accessToken=${accessToken}`,
+            },
+            cache: "force-cache",
+            next: {
+                revalidate: 60 * 60,
+                tags: ["landlord-requests"],
+            },
+        },
+    );
+
+    const result = await res.json();
+
+    return result;
+};
+
+

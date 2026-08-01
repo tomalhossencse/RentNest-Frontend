@@ -4,58 +4,60 @@ import { useState } from "react"
 import { Search, Inbox } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { RentalRequestCard, RentalRequest } from "../landlord/RentalRequestCard"
+import { RentalRequestCard } from "./RentalRequestCard"
+import { IApiRentalRequests } from "@/lib/types"
 
-const STATIC_REQUESTS: RentalRequest[] = [
-    {
-        id: "4b4a8549-b350-4d3f-9f14-df297fc88ea5",
-        propertyId: "a156096e-3cea-4940-a641-1b4f28cca7ef",
-        tenantId: "d764b6b7-1e24-4005-a08a-afacfff3ba5c",
-        moveInDate: "2026-08-01T00:00:00.000Z",
-        status: "PAID",
-        message: "I'm interested in renting this apartment for my family.",
-        createdAt: "2026-07-07T08:51:15.441Z",
-        updatedAt: "2026-07-09T05:21:45.991Z",
-        tenant: {
-            name: "Tanvir Ahmed",
-            email: "tanvir.tan@gmail.com",
-        },
-    },
-    {
-        id: "7c128549-a250-4d3f-9f14-eb297fc88ee1",
-        propertyId: "b256096e-3cea-4940-a641-1b4f28cca7ef",
-        tenantId: "e864b6b7-1e24-4005-a08a-afacfff3ba5d",
-        moveInDate: "2026-08-15T00:00:00.000Z",
-        status: "PENDING",
-        message: "Looking for a quiet apartment near Sylhet city center.",
-        createdAt: "2026-07-10T11:20:00.000Z",
-        updatedAt: "2026-07-10T11:20:00.000Z",
-        tenant: {
-            name: "Rahim Chowdhury",
-            email: "rahim.chowdhury@gmail.com",
-        },
-    },
-    {
-        id: "9d338549-c450-4d3f-9f14-fc297fc88ff2",
-        propertyId: "c356096e-3cea-4940-a641-1b4f28cca7ef",
-        tenantId: "f964b6b7-1e24-4005-a08a-afacfff3ba5e",
-        moveInDate: "2026-09-01T00:00:00.000Z",
-        status: "APPROVED",
-        message: "Requesting move-in for September 1st.",
-        createdAt: "2026-07-12T09:15:30.000Z",
-        updatedAt: "2026-07-13T14:10:00.000Z",
-        tenant: {
-            name: "Nusrat Jahan",
-            email: "nusrat.jahan@gmail.com",
-        },
-    },
-]
+// const STATIC_REQUESTS: RentalRequest[] = [
+//     {
+//         id: "4b4a8549-b350-4d3f-9f14-df297fc88ea5",
+//         propertyId: "a156096e-3cea-4940-a641-1b4f28cca7ef",
+//         tenantId: "d764b6b7-1e24-4005-a08a-afacfff3ba5c",
+//         moveInDate: "2026-08-01T00:00:00.000Z",
+//         status: "PAID",
+//         message: "I'm interested in renting this apartment for my family.",
+//         createdAt: "2026-07-07T08:51:15.441Z",
+//         updatedAt: "2026-07-09T05:21:45.991Z",
+//         tenant: {
+//             name: "Tanvir Ahmed",
+//             email: "tanvir.tan@gmail.com",
+//         },
+//     },
+//     {
+//         id: "7c128549-a250-4d3f-9f14-eb297fc88ee1",
+//         propertyId: "b256096e-3cea-4940-a641-1b4f28cca7ef",
+//         tenantId: "e864b6b7-1e24-4005-a08a-afacfff3ba5d",
+//         moveInDate: "2026-08-15T00:00:00.000Z",
+//         status: "PENDING",
+//         message: "Looking for a quiet apartment near Sylhet city center.",
+//         createdAt: "2026-07-10T11:20:00.000Z",
+//         updatedAt: "2026-07-10T11:20:00.000Z",
+//         tenant: {
+//             name: "Rahim Chowdhury",
+//             email: "rahim.chowdhury@gmail.com",
+//         },
+//     },
+//     {
+//         id: "9d338549-c450-4d3f-9f14-fc297fc88ff2",
+//         propertyId: "c356096e-3cea-4940-a641-1b4f28cca7ef",
+//         tenantId: "f964b6b7-1e24-4005-a08a-afacfff3ba5e",
+//         moveInDate: "2026-09-01T00:00:00.000Z",
+//         status: "APPROVED",
+//         message: "Requesting move-in for September 1st.",
+//         createdAt: "2026-07-12T09:15:30.000Z",
+//         updatedAt: "2026-07-13T14:10:00.000Z",
+//         tenant: {
+//             name: "Nusrat Jahan",
+//             email: "nusrat.jahan@gmail.com",
+//         },
+//     },
+// ]
 
-export function RequestHistory() {
+export function RequestHistory({ result }: { result: IApiRentalRequests }) {
+    const { success, data: requests } = result;
     const [searchQuery, setSearchQuery] = useState("")
     const [activeTab, setActiveTab] = useState("ALL")
 
-    const filteredRequests = STATIC_REQUESTS.filter((req) => {
+    const filteredRequests = requests.filter((req) => {
         const matchesTab =
             activeTab === "ALL" ? true : req.status.toUpperCase() === activeTab
 
@@ -92,7 +94,7 @@ export function RequestHistory() {
             </div>
 
             {/* Grid List */}
-            {filteredRequests.length > 0 ? (
+            {success && filteredRequests.length > 0 ? (
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {filteredRequests.map((request) => (
                         <RentalRequestCard key={request.id} request={request} />

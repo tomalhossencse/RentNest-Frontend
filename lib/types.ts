@@ -134,7 +134,14 @@ export interface IRentalRequest {
     createdAt: string; // ISO Date String
     updatedAt: string; // ISO Date String
     property: NestedPropertyDetails;
+    tenant: {
+        name: string,
+        email: string
+    }
 }
+
+
+
 export type IRentalRequests = IRentalRequest[]
 
 export type IApiRentalRequests = userApiResponse<IRentalRequests>

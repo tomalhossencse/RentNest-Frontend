@@ -1,12 +1,13 @@
 "use client"
 
-import { Bell, Search, Menu } from "lucide-react"
+import { Bell, Search, Menu, LogOut } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import {
     DropdownMenu,
     DropdownMenuContent,
+    DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
@@ -43,35 +44,60 @@ export function DashboardTopbar({ onMobileMenuToggle }: TopbarProps) {
 
             {/* Right Controls */}
             <div className="flex items-center gap-2 md:gap-4">
-                <Button variant="outline" size="icon" className="relative h-9 w-9 md:h-10 md:w-10 border-border text-muted-foreground hover:text-foreground">
+                {/* Notification Bell */}
+                <Button
+                    variant="outline"
+                    size="icon"
+                    className="relative h-9 w-9 md:h-10 md:w-10 border-border text-muted-foreground hover:text-foreground"
+                >
                     <Bell className="h-4 w-4 md:h-5 md:w-5" />
                     <Badge className="absolute -right-1 -top-1 h-4 w-4 md:h-5 md:w-5 rounded-full p-0 flex items-center justify-center text-[10px] md:text-xs bg-primary text-primary-foreground font-bold">
                         3
                     </Badge>
                 </Button>
 
-                <div className="h-5 w-[1px] bg-border my-auto mx-0.5 md:mx-1" />
+                {/* Divider */}
+                <div className="h-5 w-px bg-border my-auto mx-0.5 md:mx-1" />
 
+                {/* User Dropdown */}
                 <DropdownMenu>
-                    <DropdownMenuTrigger className="focus:outline-hidden">
-                        <Avatar className="h-9 w-9 md:h-10 md:w-10 border border-border cursor-pointer transition-all hover:ring-2 hover:ring-primary/20">
+                    {/* Remove 'asChild' prop here */}
+                    <DropdownMenuTrigger className="focus:outline-none rounded-full ring-offset-background transition-all hover:ring-2 hover:ring-primary/20">
+                        <Avatar className="h-9 w-9 md:h-10 md:w-10 border border-border cursor-pointer">
                             <AvatarImage src="/avatar-placeholder.png" alt="User Avatar" />
                             <AvatarFallback className="bg-primary/10 text-primary text-xs md:text-sm font-bold">
                                 TH
                             </AvatarFallback>
                         </Avatar>
                     </DropdownMenuTrigger>
+
                     <DropdownMenuContent align="end" className="w-64 border-border bg-card p-2">
-                        <DropdownMenuLabel className="font-normal p-2">
-                            <div className="flex flex-col space-y-1">
-                                <p className="text-sm font-bold leading-none text-foreground">Md. Tomal Hossen</p>
-                                <p className="text-xs text-muted-foreground mt-0.5">landlord@rentnest.com</p>
-                            </div>
-                        </DropdownMenuLabel>
+                        <DropdownMenuGroup>
+                            <DropdownMenuLabel className="font-normal p-2">
+                                <div className="flex flex-col space-y-1">
+                                    <p className="text-sm font-bold leading-none text-foreground">
+                                        Md. Tomal Hossen
+                                    </p>
+                                    <p className="text-xs text-muted-foreground mt-0.5">
+                                        landlord@rentnest.com
+                                    </p>
+                                </div>
+                            </DropdownMenuLabel>
+                        </DropdownMenuGroup>
+
                         <DropdownMenuSeparator className="bg-border my-1" />
-                        <DropdownMenuItem className="text-sm cursor-pointer py-2">Profile Settings</DropdownMenuItem>
-                        <DropdownMenuItem className="text-sm cursor-pointer py-2">Billing & Payments</DropdownMenuItem>
+
+                        <DropdownMenuGroup>
+                            <DropdownMenuItem className="text-sm cursor-pointer py-2">
+                                Profile Settings
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="text-sm cursor-pointer py-2">
+                                Billing & Payments
+                            </DropdownMenuItem>
+                        </DropdownMenuGroup>
+
                         <DropdownMenuSeparator className="bg-border my-1" />
+
                         <DropdownMenuItem className="text-sm text-destructive focus:bg-destructive/10 focus:text-destructive cursor-pointer py-2">
                             Log out
                         </DropdownMenuItem>

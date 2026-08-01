@@ -2,38 +2,15 @@ import { CalendarDays, Mail, User, Clock, CreditCard, CheckCircle2, XCircle } fr
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import { IRentalRequest } from "@/lib/types"
+import { formattedAvailableDate } from "@/utils"
 
-export interface RentalRequest {
-    id: string
-    propertyId: string
-    tenantId: string
-    moveInDate: string
-    status: "PAID" | "PENDING" | "APPROVED" | "REJECTED" | string
-    message: string
-    createdAt: string
-    updatedAt: string
-    tenant?: {
-        name: string
-        email: string
-    }
-}
 
 interface RentalRequestCardProps {
-    request: RentalRequest
+    request: IRentalRequest
 }
 
 export function RentalRequestCard({ request }: RentalRequestCardProps) {
-    const formattedMoveIn = new Date(request.moveInDate).toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-    })
-
-    const formattedCreated = new Date(request.createdAt).toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-    })
 
     const getStatusBadge = (status: string) => {
         switch (status.toUpperCase()) {
@@ -98,7 +75,7 @@ export function RentalRequestCard({ request }: RentalRequestCardProps) {
                         <span className="text-xs font-medium text-muted-foreground">Desired Move-in</span>
                         <p className="flex items-center gap-2 text-sm font-semibold text-foreground">
                             <CalendarDays className="h-4 w-4 text-primary shrink-0" />
-                            {formattedMoveIn}
+                            {formattedAvailableDate(request.moveInDate)}
                         </p>
                     </div>
 
@@ -106,7 +83,7 @@ export function RentalRequestCard({ request }: RentalRequestCardProps) {
                         <span className="text-xs font-medium text-muted-foreground">Requested On</span>
                         <p className="flex items-center gap-2 text-sm font-semibold text-foreground">
                             <Clock className="h-4 w-4 text-primary shrink-0" />
-                            {formattedCreated}
+                            {formattedAvailableDate(request.createdAt)}
                         </p>
                     </div>
                 </div>
