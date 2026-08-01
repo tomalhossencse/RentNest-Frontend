@@ -1,6 +1,7 @@
 "use server";
 
-import { PropertiesResponse } from "@/lib/types";
+import { IProperty, PropertiesResponse } from "@/lib/types";
+import { toast } from "sonner";
 
 
 type NewsQuery = {
@@ -64,3 +65,24 @@ export const getProperties = async ({
 
     return result;
 };
+
+
+export const getPropertyById = async (id: string): Promise<IProperty | null> => {
+    try {
+        const res = await fetch(
+            `${process.env.BACKEND_API_URL}/api/properties/${id}`,
+            {
+                cache: "no-store",
+            });
+
+        if (!res.ok) return null
+        const result = await res.json();
+        return result.data || null;
+
+    } catch (error) {
+        toast.error('Failed to fetch property details:')
+        console.error("Failed to fetch property details:", error)
+        return null
+    }
+}
+

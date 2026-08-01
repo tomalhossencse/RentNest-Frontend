@@ -75,6 +75,7 @@ export interface IProperty {
     division: Division;
     district: string;
     address: string;
+    description: string;
     status: PropertyStatus;
     floor: number;
     image: string | null;

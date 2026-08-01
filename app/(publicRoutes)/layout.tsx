@@ -7,7 +7,7 @@ export default async function HomeLayout({ children }: { children: React.ReactNo
         <div>
             <Navbar user={user} />
             {children}
-            <p>Footer</p>
+            {/* <p>Footer</p> */}
         </div>
     )
 }

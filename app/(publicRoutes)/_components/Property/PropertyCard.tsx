@@ -11,9 +11,10 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { PropertyCardProps } from "@/lib/types";
 import { Building2, CalendarDays, MapPin, User } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const FALLBACK_IMAGE =
     "https://images.unsplash.com/photo-1568605114967-8130f3a36994?fm=jpg&q=60&w=3000&auto=format&fit=crop";
@@ -102,12 +103,17 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
                 </div>
             </CardContent>
 
+            {/* Action Footer */}
             <CardFooter className="px-4 py-2 pt-0">
-                <Button size="lg" className="w-full font-medium">
-                    <Link href={`/properties/${property.id}`}>
-                        View Details
-                    </Link>
-                </Button>
+                <Link
+                    href={`/properties/${property.id}`}
+                    className={cn(
+                        buttonVariants({ size: "lg" }),
+                        "w-full font-medium justify-center"
+                    )}
+                >
+                    View Details
+                </Link>
             </CardFooter>
         </Card>
     )

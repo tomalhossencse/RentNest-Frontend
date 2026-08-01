@@ -399,7 +399,7 @@ export function PropertySearchBar() {
                                 />
                             </div>
 
-                            {/* Bedrooms Filter */}
+                            {/* Floors Filter */}
                             <div className="space-y-2">
                                 <label className="text-xs font-semibold text-muted-foreground">
                                     Floors

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getProperties } from "../_actions/propertyActions"
 import { Paginations } from "../_components/Property/Pagination";
 import { PropertyListing } from "../_components/Property/PropertyListing"

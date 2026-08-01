@@ -4,7 +4,6 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { cookies } from "next/headers";
 
 export const loginAction = async (data: LoginFormData) => {
-    console.log(data)
 
     const payload = {
         ...data

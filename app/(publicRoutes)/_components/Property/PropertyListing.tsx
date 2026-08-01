@@ -1,5 +1,6 @@
 import { PropertiesResponse } from "@/lib/types";
 import PropertyCard from "./PropertyCard";
+import { toast } from "sonner";
 
 export async function PropertyListing({ result
 }: {
