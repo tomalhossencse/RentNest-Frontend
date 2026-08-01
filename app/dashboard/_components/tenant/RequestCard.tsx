@@ -1,3 +1,4 @@
+"use client"
 import {
     Calendar,
     CalendarDays,
@@ -11,14 +12,43 @@ import {
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
-import { buttonVariants } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { IRentalRequest } from "@/lib/types"
 import { formatDateTime, formattedAvailableDate } from "@/utils"
+import { useRouter } from "next/navigation"
+import { useTransition } from "react"
+import { createPayment } from "../../_actions/paymentActions"
+import { toast } from "sonner"
 
-
-export function RequestCard({ req }: { req: IRentalRequest }) {
+interface RequestCardProps {
+    req: IRentalRequest
+    onPayment?: () => void
+}
+export function RequestCard({ req, onPayment }: RequestCardProps) {
     const landlord = req.property?.landlord
+    const [isPending, startTransition] = useTransition()
+    const router = useRouter()
+
+    const handlePayment = () => {
+        startTransition(async () => {
+            try {
+                const res = (await createPayment(req.id))
+                if (res?.success) {
+                    toast.success(`Payment created successfully`)
+                    if (onPayment) onPayment()
+                    router.push(res.data?.gatewayPageURL || "/dashboard")
+                } else {
+                    toast.error(res?.message || "Failed to create payment")
+                }
+            } catch (error) {
+                toast.error("An unexpected error occurred")
+                console.error(error)
+            } finally {
+            }
+        })
+    }
+
 
     return (
         <Card className="group relative overflow-hidden border-border bg-card shadow-sm hover:shadow-md transition-all duration-200">
@@ -114,15 +144,14 @@ export function RequestCard({ req }: { req: IRentalRequest }) {
             {/* Footer / CTA Action */}
             {req.status === "APPROVED" && (
                 <CardFooter className="pt-0 pb-4">
-                    <Link
-                        href={`/payment?requestId=${req.id}&amount=${req.property.monthlyRent}`}
+                    <Button onClick={() => handlePayment()}
                         className={cn(
                             buttonVariants({ size: "default" }),
                             "w-full font-bold gap-2 shadow-sm hover:shadow transition-all"
                         )}
                     >
                         <CreditCard className="h-4 w-4" /> Proceed to Security Payment
-                    </Link>
+                    </Button>
                 </CardFooter>
             )}
         </Card>

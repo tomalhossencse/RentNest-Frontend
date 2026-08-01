@@ -16,7 +16,7 @@ export default function PaymentSuccessPage() {
                         Your rental deposit has been confirmed. The landlord has been notified of your move-in status.
                     </p>
                 </div>
-                <Link href="/dashboard/tenant-requests" className={cn(buttonVariants({ size: "lg" }), "w-full font-bold")}>
+                <Link href="/dashboard/tenant/requests" className={cn(buttonVariants({ size: "lg" }), "w-full font-bold")}>
                     Return to My Applications
                 </Link>
             </div>

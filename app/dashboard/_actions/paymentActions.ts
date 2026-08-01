@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 export const createPayment = async (requestId: string) => {
@@ -21,6 +22,12 @@ export const createPayment = async (requestId: string) => {
     });
 
     const result = await res.json();
+
+    if (result?.success) {
+        revalidateTag("tenant-requests", {
+            expire: 0,
+        });
+    }
 
     return result;
 };
