@@ -10,7 +10,7 @@ import {
     RentalRequestModal,
 } from "./RentalRequestModal"
 import { RentalRequestFormData } from "@/lib/types"
-import { addRequests } from "../../_actions/tenant/requestActions"
+import { addRequests } from "../../_actions/requestActions"
 import { toast } from "sonner"
 
 interface PropertyActionCardProps {

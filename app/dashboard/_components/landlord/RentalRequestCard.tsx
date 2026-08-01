@@ -7,7 +7,7 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { IApiRentalRequest, IRentalRequest } from "@/lib/types"
 import { formattedAvailableDate } from "@/utils"
 import { useState, useTransition } from "react"
-import { updateRequestStatus } from "../../_actions/tenant/requestActions"
+import { updateRequestStatus } from "../../_actions/requestActions"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 

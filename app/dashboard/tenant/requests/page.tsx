@@ -1,4 +1,4 @@
-import { getTenantRequests } from "../../_actions/tenant/requestActions"
+import { getTenantRequests } from "../../_actions/requestActions"
 import { RequestCard } from "../../_components/tenant/RequestCard"
 import EmptyRequestsState from "../../_components/tenant/EmptyRequestsState"
 import { IApiRentalRequests } from "@/lib/types"
