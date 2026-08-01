@@ -144,6 +144,7 @@ export interface IRentalRequest {
 
 export type IRentalRequests = IRentalRequest[]
 
+export type IApiRentalRequest = userApiResponse<IRentalRequest>
 export type IApiRentalRequests = userApiResponse<IRentalRequests>
 
 export type INavItem = {

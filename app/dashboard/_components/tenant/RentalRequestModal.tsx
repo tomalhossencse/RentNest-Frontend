@@ -27,35 +27,6 @@ interface RentalRequestModalProps {
     onSubmitRequest?: (data: RentalRequestFormData) => Promise<void> | void
 }
 
-//   const {
-//         register,
-//         handleSubmit,
-//         formState: { errors, isSubmitting },
-//     } = useForm<LoginFormData>({ resolver: zodResolver(loginSchema) })
-
-
-
-//     const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
-//         try {
-//             const promise = loginAction(data);
-
-//             toast.promise(promise, {
-//                 loading: "Logging in...",
-//                 success: "Logged in successfully!",
-//                 error: (err) => err.message || "Failed to log in.",
-//             });
-
-//             const res = await promise;
-
-//             if (res?.redirectUrl) {
-//                 router.replace(res.redirectUrl);
-//                 router.refresh();
-//             }
-//         } catch (err) {
-//         }
-//     };
-
-
 export function RentalRequestModal({
     open,
     onOpenChange,

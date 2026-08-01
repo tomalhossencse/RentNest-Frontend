@@ -1,5 +1,5 @@
 import { IApiRentalRequests } from '@/lib/types'
-import { getLandlordRequests } from '../../_actions/tenant/requestActions'
+import { getLandlordRequests, updateRequestStatus } from '../../_actions/tenant/requestActions'
 import { RequestHistory } from '../../_components/landlord/RequestHistory'
 
 const ManageRequestPage = async () => {

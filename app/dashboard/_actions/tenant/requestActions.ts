@@ -1,5 +1,6 @@
 'use server'
 import { RentalRequestFormData } from "@/lib/types";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 export const getTenantRequests = async () => {
@@ -70,6 +71,32 @@ export const getLandlordRequests = async () => {
     );
 
     const result = await res.json();
+
+    return result;
+};
+
+export const updateRequestStatus = async (status: string, requestId: string) => {
+
+    const cookieStore = await cookies();
+
+    const accessToken = cookieStore.get("accessToken")?.value;
+
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/requests/landlord/${requestId}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            Cookie: `accessToken=${accessToken}`,
+        },
+        body: JSON.stringify({ status }),
+    });
+
+    const result = await res.json();
+
+    if (result?.success) {
+        revalidateTag("landlord-requests", {
+            expire: 0,
+        });
+    }
 
     return result;
 };

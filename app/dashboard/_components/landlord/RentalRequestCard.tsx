@@ -1,16 +1,50 @@
-import { CalendarDays, Mail, User, Clock, CreditCard, CheckCircle2, XCircle } from "lucide-react"
+"use client"
+
+import { CalendarDays, Mail, User, Clock, CreditCard, CheckCircle2, XCircle, Loader2 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
-import { IRentalRequest } from "@/lib/types"
+import { IApiRentalRequest, IRentalRequest } from "@/lib/types"
 import { formattedAvailableDate } from "@/utils"
-
+import { useState, useTransition } from "react"
+import { updateRequestStatus } from "../../_actions/tenant/requestActions"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 interface RentalRequestCardProps {
     request: IRentalRequest
+    onRequestUpdated?: () => void
 }
 
-export function RentalRequestCard({ request }: RentalRequestCardProps) {
+export function RentalRequestCard({ request, onRequestUpdated }: RentalRequestCardProps) {
+    const [isPending, startTransition] = useTransition()
+    const router = useRouter()
+    const [activeAction, setActiveAction] = useState<string | null>(null)
+
+    const handleStatus = (status: string) => {
+        // 1. Set active action OUTSIDE startTransition immediately
+        setActiveAction(status)
+
+        startTransition(async () => {
+            try {
+                const res = (await updateRequestStatus(status, request.id)) as IApiRentalRequest
+
+                if (res?.success) {
+                    toast.success(`Request ${status.toLowerCase()} successfully`)
+                    if (onRequestUpdated) onRequestUpdated()
+                    router.refresh()
+                } else {
+                    toast.error(res?.message || "Failed to update status")
+                }
+            } catch (error) {
+                toast.error("An unexpected error occurred")
+                console.error(error)
+            } finally {
+                // 2. Clear active action after transition completes
+                setActiveAction(null)
+            }
+        })
+    }
 
     const getStatusBadge = (status: string) => {
         switch (status.toUpperCase()) {
@@ -100,17 +134,29 @@ export function RentalRequestCard({ request }: RentalRequestCardProps) {
             {request.status.toUpperCase() === "PENDING" && (
                 <CardFooter className="flex items-center gap-3 border-t border-border px-6 py-4">
                     <Button
+                        onClick={() => handleStatus("REJECTED")}
+                        disabled={isPending}
                         size="default"
                         variant="outline"
                         className="flex-1 text-sm font-semibold border-destructive/30 text-destructive hover:bg-destructive/10"
                     >
-                        Reject
+                        {isPending && activeAction === "REJECTED" ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                            "Reject"
+                        )}
                     </Button>
                     <Button
+                        onClick={() => handleStatus("APPROVED")}
+                        disabled={isPending}
                         size="default"
                         className="flex-1 text-sm font-semibold"
                     >
-                        Approve Request
+                        {isPending && activeAction === "APPROVED" ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                            "Approve Request"
+                        )}
                     </Button>
                 </CardFooter>
             )}
