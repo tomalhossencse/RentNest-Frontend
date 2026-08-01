@@ -1,27 +1,36 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Home, Building2, Users, FileText, Settings, ShieldCheck, CreditCard, X } from "lucide-react"
+import { usePathname, useRouter } from "next/navigation"
+import { X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { INavItem, NavbarProps, userApiResponse } from "@/lib/types"
+import { sidebarNavs } from "../_config/sidebarNavs"
 
-const NAV_ITEMS = [
-    { label: "Dashboard", href: "/dashboard", icon: Home },
-    { label: "My Properties", href: "/dashboard/properties", icon: Building2 },
-    { label: "Landlord Requests", href: "/dashboard/requests", icon: FileText },
-    { label: "Tenant Requests", href: "/dashboard/tenant/requests", icon: CreditCard },
-    { label: "Admin Panel", href: "/dashboard/admin", icon: ShieldCheck },
-    { label: "Settings", href: "/dashboard/settings", icon: Settings },
-]
+
 
 interface SidebarProps {
     mobileOpen?: boolean
     onMobileClose?: () => void
+    user: NavbarProps
 }
 
-export function DashboardSidebar({ mobileOpen, onMobileClose }: SidebarProps) {
+export function DashboardSidebar({ mobileOpen, onMobileClose, user }: SidebarProps) {
     const pathname = usePathname()
+    const router = useRouter()
+
+    let navItems: INavItem[] = []
+
+    if (user.data?.role === "ADMIN") {
+        navItems = sidebarNavs.ADMIN
+    } else if (user.data?.role === 'LANDLORD') {
+        navItems = sidebarNavs.LANDLORD
+    } else if (user.data?.role === 'TENANT') {
+        navItems = sidebarNavs.TENANT
+    } else {
+        return
+    }
 
     return (
         <>
@@ -42,7 +51,7 @@ export function DashboardSidebar({ mobileOpen, onMobileClose }: SidebarProps) {
                 <div className="space-y-8">
                     {/* Header */}
                     <div className="flex items-center justify-between px-2 pt-2">
-                        <div className="flex items-center gap-3">
+                        <div onClick={() => router.push("/")} className="flex cursor-pointer items-center gap-3">
                             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground font-black text-lg shadow-xs">
                                 RN
                             </div>
@@ -60,7 +69,7 @@ export function DashboardSidebar({ mobileOpen, onMobileClose }: SidebarProps) {
 
                     {/* Nav Items */}
                     <nav className="space-y-1.5">
-                        {NAV_ITEMS.map((item) => {
+                        {navItems.map((item) => {
                             const Icon = item.icon
                             const isActive = pathname === item.href
 

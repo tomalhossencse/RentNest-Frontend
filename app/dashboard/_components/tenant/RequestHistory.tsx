@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Search, Inbox } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { RentalRequestCard, RentalRequest } from "./RentalRequestCard"
+import { RentalRequestCard, RentalRequest } from "../landlord/RentalRequestCard"
 
 const STATIC_REQUESTS: RentalRequest[] = [
     {

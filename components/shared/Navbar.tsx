@@ -34,7 +34,7 @@ const userMenuItems = [
 
 
 
-export function Navbar({ user }: NavbarProps) {
+export function Navbar({ user }: { user: NavbarProps }) {
     const router = useRouter()
     const handleUserMenuAction = async (action: string) => {
 

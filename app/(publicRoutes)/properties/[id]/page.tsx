@@ -21,6 +21,7 @@ import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
 import { getPropertyById } from "../../_actions/propertyActions"
 import { formattedAvailableDate, formattedRentFn } from "@/utils"
+import { PropertyActionCard } from "@/app/dashboard/_components/tenant/PropertyActionCard"
 
 const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80"
 
@@ -62,6 +63,7 @@ export default async function PropertyDetailsPage({
                         Share
                     </Button>
                 </div>
+
 
                 {/* Main Image Banner */}
                 <div className="relative mb-8 h-80 w-full overflow-hidden rounded-xl border border-border bg-muted md:h-112">
@@ -167,61 +169,16 @@ export default async function PropertyDetailsPage({
                         </div>
                     </div>
 
+
                     {/* Sidebar Action Card */}
                     <div className="space-y-6">
-                        <Card className="sticky top-20 border-border bg-card shadow-md">
-                            <CardHeader className="pb-4">
-                                <CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                                    Rental Details
-                                </CardTitle>
-                                <div className="mt-2 flex items-baseline gap-1.5">
-                                    <span className="text-3xl font-extrabold text-primary">৳{formattedRent}</span>
-                                    <span className="text-sm text-muted-foreground font-medium">/ month</span>
-                                </div>
-                            </CardHeader>
-
-                            <CardContent className="space-y-5">
-                                <Separator className="bg-border" />
-
-                                {/* Landlord Contact Info */}
-                                <div className="space-y-3">
-                                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                                        Landlord Info
-                                    </p>
-                                    <div className="flex items-center gap-3 rounded-lg border border-border bg-muted/40 p-3">
-                                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                                            <User className="h-5 w-5" />
-                                        </div>
-                                        <div className="min-w-0 flex-1">
-                                            <p className="truncate text-sm font-medium text-foreground">{property.landlord?.name}</p>
-                                            <p className="flex items-center gap-1 truncate text-xs text-muted-foreground">
-                                                <Mail className="h-3 w-3 shrink-0" />
-                                                <span className="truncate">{property.landlord?.email}</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Actions */}
-                                <div className="space-y-2.5 pt-2">
-                                    <Button className="w-full font-semibold" size="lg" disabled={property.status !== "AVAILABLE"}>
-                                        {property.status === "AVAILABLE" ? "Request to Rent" : "Currently Rented"}
-                                    </Button>
-
-                                    <Button variant="outline" className="w-full border-border bg-card hover:bg-muted" size="lg" >
-                                        <a className={cn(
-                                            buttonVariants({ variant: "ghost", size: "sm" }),
-                                            "gap-2 text-muted-foreground hover:text-foreground"
-                                        )} href={`https://mail.google.com/mail/u/0/?to=${property.landlord?.email}.com&fs=1&tf=cm`}
-
-                                            target="_blank"
-                                        >
-                                            Contact Landlord
-                                        </a>
-                                    </Button>
-                                </div>
-                            </CardContent>
-                        </Card>
+                        <PropertyActionCard
+                            propertyId={property.id}
+                            propertyTitle={property.title}
+                            monthlyRent={formattedRent}
+                            status={property.status}
+                            landlord={property.landlord}
+                        />
                     </div>
 
                 </div>

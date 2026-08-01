@@ -1,10 +1,13 @@
 import z from "zod";
 import { loginSchema } from "./validations/login.validation";
 import { registerSchema } from "./validations/register.validation";
+import { rentalRequestSchema } from "./validations/request.validation";
+import { ForwardRefExoticComponent, RefAttributes } from "react";
+import { LucideProps } from "lucide-react";
 
 export type LoginFormData = z.infer<typeof loginSchema>;
 export type RegisterFormData = z.infer<typeof registerSchema>;
-
+export type RentalRequestFormData = z.infer<typeof rentalRequestSchema>;
 
 export interface userApiResponse<T> {
     success: boolean;
@@ -29,9 +32,7 @@ export interface UserProfile {
 }
 
 
-export type NavbarProps = {
-    user: userApiResponse<UserProfile>
-};
+export type NavbarProps = userApiResponse<UserProfile>
 
 
 
@@ -117,6 +118,10 @@ export interface NestedPropertyDetails {
     address: string;
     monthlyRent: string; // Note: String type to match JSON ("24000")
     category: PropertyCategory;
+    landlord: {
+        name: string,
+        email: string
+    }
 }
 
 export interface IRentalRequest {
@@ -131,4 +136,15 @@ export interface IRentalRequest {
     property: NestedPropertyDetails;
 }
 export type IRentalRequests = IRentalRequest[]
+
+export type IApiRentalRequests = userApiResponse<IRentalRequests>
+
+export type INavItem = {
+    label: string;
+    href: string;
+    icon: ForwardRefExoticComponent<
+        Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
+    >;
+};
+
 
