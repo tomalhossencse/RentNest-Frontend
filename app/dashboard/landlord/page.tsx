@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Building2, Users, FileText, DollarSign, ArrowUpRight, ArrowRight } from "lucide-react"
+import { Building2, Users, FileText, DollarSign, ArrowUpRight } from "lucide-react"
 import { RequestHistory } from "../_components/landlord/RequestHistory"
 import { IApiRentalRequests, ILandlordStatsResponse } from "@/lib/types"
 import { getLandlordRequests } from "../_actions/requestActions"
