@@ -8,8 +8,9 @@ import { IApiRentalRequests } from "@/lib/types"
 import { Suspense } from "react"
 import { RequestListSkeleton } from "../../_components/tenant/RequestCardSkeleton"
 export default async function TenantRequestsPage() {
-    const { data: requests, success } = await getTenantRequests() as IApiRentalRequests
-
+    const data = await getTenantRequests() as IApiRentalRequests
+    const requests = data?.data ?? []
+    const success = data?.success ?? false
 
     return (
         <div className="max-w-5xl mx-auto space-y-8">

@@ -156,3 +156,17 @@ export type INavItem = {
 };
 
 
+export interface ILandlordStats {
+    totalProperties: number;
+    totalRequests: number;
+    totalRentedProperties: number;
+    totalPayments: number;
+    totalRentals: number;
+    totalReviews: number;
+    totalActiveTenants: number;
+    monthlyRevenue: number
+}
+
+export type ILandlordStatsResponse = userApiResponse<ILandlordStats>;
+
+

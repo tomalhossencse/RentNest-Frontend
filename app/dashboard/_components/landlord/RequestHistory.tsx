@@ -14,7 +14,7 @@ export function RequestHistory({ result }: { result: IApiRentalRequests }) {
     const [searchQuery, setSearchQuery] = useState("")
     const [activeTab, setActiveTab] = useState("ALL")
 
-    const filteredRequests = requests.filter((req) => {
+    const filteredRequests = success && requests.length > 0 ? requests.filter((req) => {
         const matchesTab =
             activeTab === "ALL" ? true : req.status.toUpperCase() === activeTab
 
@@ -24,7 +24,7 @@ export function RequestHistory({ result }: { result: IApiRentalRequests }) {
             req.tenant?.name?.toLowerCase().includes(searchQuery.toLowerCase())
 
         return matchesTab && matchesSearch
-    })
+    }) : []
 
     return (
         <div className="space-y-6">

@@ -1,8 +1,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Building2, Users, FileText, DollarSign, ArrowUpRight } from "lucide-react"
+import { Building2, Users, FileText, DollarSign, ArrowUpRight, ArrowRight } from "lucide-react"
 import { RequestHistory } from "../_components/landlord/RequestHistory"
+import { IApiRentalRequests, ILandlordStatsResponse } from "@/lib/types"
+import { getLandlordRequests } from "../_actions/requestActions"
+import { getLandlordStats } from "../_actions/statsActions"
 
-export default function LandLordDashboardPage() {
+export default async function LandLordDashboardPage() {
+    const result = await getLandlordRequests() as IApiRentalRequests
+
+    const stateResult = await getLandlordStats() as ILandlordStatsResponse;
+
     return (
         <div className="max-w-7xl mx-auto space-y-10">
 
@@ -24,7 +31,7 @@ export default function LandLordDashboardPage() {
                         <Building2 className="h-5 w-5 text-primary" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-3xl font-extrabold">12</div>
+                        <div className="text-3xl font-extrabold">{stateResult?.data?.totalProperties || "0"}</div>
                         <p className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1 mt-2">
                             <ArrowUpRight className="h-4 w-4" /> 2 added this month
                         </p>
@@ -39,7 +46,7 @@ export default function LandLordDashboardPage() {
                         <Users className="h-5 w-5 text-primary" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-3xl font-extrabold">8</div>
+                        <div className="text-3xl font-extrabold">{stateResult?.data?.totalActiveTenants || "0"}</div>
                         <p className="text-xs text-muted-foreground font-medium mt-2">
                             Occupancy Rate: <span className="font-bold text-foreground">85%</span>
                         </p>
@@ -54,7 +61,7 @@ export default function LandLordDashboardPage() {
                         <FileText className="h-5 w-5 text-primary" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-3xl font-extrabold">14</div>
+                        <div className="text-3xl font-extrabold">{stateResult?.data?.totalRequests || "0"}</div>
                         <p className="text-xs text-amber-600 dark:text-amber-400 font-semibold mt-2">
                             1 pending review
                         </p>
@@ -69,7 +76,7 @@ export default function LandLordDashboardPage() {
                         <DollarSign className="h-5 w-5 text-primary" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-3xl font-extrabold">৳84,000</div>
+                        <div className="text-3xl font-extrabold">৳{stateResult?.data?.monthlyRevenue?.toLocaleString("en-BD") || "0"}</div>
                         <p className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1 mt-2">
                             <ArrowUpRight className="h-4 w-4" /> +12% vs last month
                         </p>
@@ -86,7 +93,7 @@ export default function LandLordDashboardPage() {
                     </p>
                 </div>
 
-                <RequestHistory />
+                <RequestHistory result={result} />
             </div>
 
         </div>
