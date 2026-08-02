@@ -10,8 +10,8 @@ import {
     RentalRequestModal,
 } from "./RentalRequestModal"
 import { RentalRequestFormData } from "@/lib/types"
-import { addRequests } from "../../_actions/requestActions"
 import { toast } from "sonner"
+import { addRequests } from "../../_actions/requestActions"
 
 interface PropertyActionCardProps {
     propertyId: string
@@ -34,20 +34,21 @@ export function PropertyActionCard({
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const handleSubmitRequest = async (data: RentalRequestFormData) => {
+        const toastId = toast.loading("Sending rental request...");
 
         try {
-            const promise = addRequests({ ...data }, propertyId);
+            const result = await addRequests(data, propertyId);
 
-            toast.promise(promise, {
-                loading: "Requesting....",
-                success: "Rental request send successfully",
-                error: (err) => err.message || "Failed to request send.",
-            });
+            if (result?.success) {
+                toast.success(result.message || "Rental request sent successfully!", { id: toastId });
 
-        } catch (error) {
-
+            } else {
+                toast.error(result?.message || "Failed to send rental request.", { id: toastId });
+            }
+        } catch (error: any) {
+            toast.error(error?.message || "Something went wrong. Please try again.", { id: toastId });
         }
-    }
+    };
 
     return (
         <>

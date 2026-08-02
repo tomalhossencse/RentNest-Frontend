@@ -1,5 +1,6 @@
 "use client"
 import {
+    Ban,
     Calendar,
     CalendarDays,
     CheckCircle2,
@@ -7,9 +8,9 @@ import {
     CreditCard,
     Mail,
     MapPin,
-    User
+    User,
+    XCircle
 } from "lucide-react"
-import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -59,14 +60,33 @@ export function RequestCard({ req, onPayment }: RequestCardProps) {
                         REQ #{req.id.slice(0, 8)}
                     </Badge>
                 </div>
+                {req.status === "PAID" && (
+                    <Badge className="bg-blue-500/15 text-blue-700 dark:text-blue-400 border-blue-500/30 font-semibold gap-1 px-2.5 py-1">
+                        <CreditCard className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" /> Paid
+                    </Badge>
+                )}
 
-                {req.status === "APPROVED" ? (
+                {req.status === "APPROVED" && (
                     <Badge className="bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/30 font-semibold gap-1 px-2.5 py-1">
                         <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" /> Approved
                     </Badge>
-                ) : (
+                )}
+
+                {req.status === "PENDING" && (
                     <Badge variant="outline" className="bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/30 font-semibold gap-1 px-2.5 py-1">
                         <Clock className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" /> Pending Review
+                    </Badge>
+                )}
+
+                {req.status === "REJECTED" && (
+                    <Badge variant="outline" className="bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-500/30 font-semibold gap-1 px-2.5 py-1">
+                        <XCircle className="h-3.5 w-3.5 text-rose-600 dark:text-rose-400" /> Rejected
+                    </Badge>
+                )}
+
+                {req.status === "CANCELLED" && (
+                    <Badge variant="outline" className="bg-red-500/15 text-red-700 dark:text-red-400 border-red-500/30 font-semibold gap-1 px-2.5 py-1">
+                        <Ban className="h-3.5 w-3.5 text-red-600 dark:text-red-400" /> Payment Canceled
                     </Badge>
                 )}
             </CardHeader>
@@ -145,12 +165,13 @@ export function RequestCard({ req, onPayment }: RequestCardProps) {
             {req.status === "APPROVED" && (
                 <CardFooter className="pt-0 pb-4">
                     <Button onClick={() => handlePayment()}
+                        disabled={isPending}
                         className={cn(
                             buttonVariants({ size: "default" }),
                             "w-full font-bold gap-2 shadow-sm hover:shadow transition-all"
                         )}
                     >
-                        <CreditCard className="h-4 w-4" /> Proceed to Security Payment
+                        <CreditCard className="h-4 w-4" /> {isPending ? "Processing..." : "Proceed to Security Payment"}
                     </Button>
                 </CardFooter>
             )}

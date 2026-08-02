@@ -44,10 +44,17 @@ export const addRequests = async (data: RentalRequestFormData, propertyId: strin
             Cookie: `accessToken=${accessToken}`,
         },
         body: JSON.stringify(payload),
+
     });
 
     const result = await res.json();
 
+
+    if (result?.success) {
+        revalidateTag("tenant-requests", {
+            expire: 0,
+        });
+    }
     return result;
 };
 
@@ -94,6 +101,9 @@ export const updateRequestStatus = async (status: string, requestId: string) => 
 
     if (result?.success) {
         revalidateTag("landlord-requests", {
+            expire: 0,
+        });
+        revalidateTag("tenant-requests", {
             expire: 0,
         });
     }

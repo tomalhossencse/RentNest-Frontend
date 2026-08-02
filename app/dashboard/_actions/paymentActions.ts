@@ -31,3 +31,9 @@ export const createPayment = async (requestId: string) => {
 
     return result;
 };
+
+export const revalidateTenantRequests = async () => {
+    revalidateTag("tenant-requests", {
+        expire: 0,
+    });
+};

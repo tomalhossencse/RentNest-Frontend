@@ -1,6 +1,6 @@
 "use client"
 
-import { CalendarDays, Mail, User, Clock, CreditCard, CheckCircle2, XCircle, Loader2 } from "lucide-react"
+import { CalendarDays, Mail, User, Clock, CreditCard, CheckCircle2, XCircle, Loader2, Ban } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
@@ -47,34 +47,56 @@ export function RentalRequestCard({ request, onRequestUpdated }: RentalRequestCa
     }
 
     const getStatusBadge = (status: string) => {
-        switch (status.toUpperCase()) {
+        switch (status?.toUpperCase()) {
             case "PAID":
                 return (
-                    <Badge className="bg-emerald-600/15 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400 border-emerald-600/30 text-xs px-2.5 py-1 font-bold gap-1.5">
-                        <CreditCard className="h-3.5 w-3.5" /> Paid & Confirmed
+                    <Badge className="bg-emerald-600/15 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400 border-emerald-600/30 text-xs px-2.5 py-1 font-bold gap-1.5 shadow-none">
+                        <CreditCard className="h-3.5 w-3.5" /> Deposit Paid
                     </Badge>
-                )
+                );
+
             case "APPROVED":
                 return (
-                    <Badge className="bg-blue-600/15 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400 border-blue-600/30 text-xs px-2.5 py-1 font-bold gap-1.5">
+                    <Badge className="bg-blue-600/15 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400 border-blue-600/30 text-xs px-2.5 py-1 font-bold gap-1.5 shadow-none">
                         <CheckCircle2 className="h-3.5 w-3.5" /> Approved
                     </Badge>
-                )
+                );
+
+            case "PENDING":
+                return (
+                    <Badge
+                        variant="outline"
+                        className="bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30 text-xs px-2.5 py-1 font-bold gap-1.5 shadow-none"
+                    >
+                        <Clock className="h-3.5 w-3.5" /> Action Required
+                    </Badge>
+                );
+
             case "REJECTED":
                 return (
-                    <Badge className="bg-destructive/15 text-destructive border-destructive/30 text-xs px-2.5 py-1 font-bold gap-1.5">
+                    <Badge className="bg-destructive/15 text-destructive border-destructive/30 text-xs px-2.5 py-1 font-bold gap-1.5 shadow-none">
                         <XCircle className="h-3.5 w-3.5" /> Rejected
                     </Badge>
-                )
+                );
+
+            case "CANCELLED":
+                return (
+                    <Badge
+                        variant="outline"
+                        className="bg-muted text-muted-foreground border-border text-xs px-2.5 py-1 font-bold gap-1.5 shadow-none"
+                    >
+                        <Ban className="h-3.5 w-3.5" /> Cancelled
+                    </Badge>
+                );
+
             default:
                 return (
-                    <Badge variant="outline" className="bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30 text-xs px-2.5 py-1 font-bold gap-1.5">
-                        <Clock className="h-3.5 w-3.5" /> Pending Review
+                    <Badge variant="outline" className="text-xs px-2.5 py-1 font-bold shadow-none">
+                        {status}
                     </Badge>
-                )
+                );
         }
-    }
-
+    };
     return (
         <Card className="border-border bg-card shadow-xs transition-all hover:shadow-md">
             <CardHeader className="pb-3 pt-5 px-6">

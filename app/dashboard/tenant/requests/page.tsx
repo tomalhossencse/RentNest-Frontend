@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 import { getTenantRequests } from "../../_actions/requestActions"
 import { RequestCard } from "../../_components/tenant/RequestCard"
 import EmptyRequestsState from "../../_components/tenant/EmptyRequestsState"
