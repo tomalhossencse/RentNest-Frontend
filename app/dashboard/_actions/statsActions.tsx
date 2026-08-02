@@ -23,3 +23,28 @@ export const getLandlordStats = async () => {
 
     return result;
 };
+
+export const getTenantStats = async () => {
+    const cookieStore = await cookies();
+
+    const accessToken = cookieStore.get("accessToken")?.value;
+
+    const res = await fetch(
+        `${process.env.BACKEND_API_URL}/api/properties/tenant/stats`,
+        {
+            headers: {
+                Cookie: `accessToken=${accessToken}`,
+            },
+            cache: "force-cache",
+            next: {
+                revalidate: 60 * 60,
+                tags: ["tenant-stats"],
+            },
+        },
+    );
+
+    const result = await res.json();
+
+    return result;
+};
+

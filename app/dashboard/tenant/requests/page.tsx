@@ -2,18 +2,14 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 import { getTenantRequests } from "../../_actions/requestActions"
-import { RequestCard } from "../../_components/tenant/RequestCard"
-import EmptyRequestsState from "../../_components/tenant/EmptyRequestsState"
 import { IApiRentalRequests } from "@/lib/types"
-import { Suspense } from "react"
-import { RequestListSkeleton } from "../../_components/tenant/RequestCardSkeleton"
+import RequestHistory from "../../_components/tenant/RequestHistory";
 export default async function TenantRequestsPage() {
-    const data = await getTenantRequests() as IApiRentalRequests
-    const requests = data?.data ?? []
-    const success = data?.success ?? false
+    const result = await getTenantRequests() as IApiRentalRequests
+
 
     return (
-        <div className="max-w-5xl mx-auto space-y-8">
+        <div className="space-y-4">
             {/* Header */}
             <div>
                 <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">
@@ -24,17 +20,8 @@ export default async function TenantRequestsPage() {
                 </p>
             </div>
 
-            {success && requests.length > 0 ? (
-                <Suspense fallback={<RequestListSkeleton count={4} />}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {requests.map((req) => (
-                            <RequestCard key={req.id} req={req} />
-                        ))}
-                    </div>
-                </Suspense>
-            ) : (
-                <EmptyRequestsState />
-            )}
+            {/* history */}
+            <RequestHistory result={result} />
         </div>
     )
 }

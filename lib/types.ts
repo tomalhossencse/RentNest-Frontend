@@ -166,7 +166,16 @@ export interface ILandlordStats {
     totalActiveTenants: number;
     monthlyRevenue: number
 }
+export interface ITenantStats {
+    totalRentals: number;
+    totalRequests: number;
+    totalApprovedRequests: number;
+    totalPendingRequests: number;
+    totalFailedRequests: number;
+    totalPayments: number;
+}
 
 export type ILandlordStatsResponse = userApiResponse<ILandlordStats>;
+export type ITenantStatsResponse = userApiResponse<ITenantStats>;
 
 
