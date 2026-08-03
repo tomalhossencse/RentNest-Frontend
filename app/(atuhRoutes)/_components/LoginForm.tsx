@@ -28,22 +28,25 @@ const LoginFrom = () => {
 
 
     const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
+        const toastId = toast.loading("Logging in...");
+
         try {
-            const promise = loginAction(data, redirectUrl);
+            const res = await loginAction(data, redirectUrl);
 
-            toast.promise(promise, {
-                loading: "Logging in...",
-                success: "Logged in successfully!",
-                error: (err) => err.message || "Failed to log in.",
-            });
+            if (!res?.success) {
+                toast.error(res?.message || "Failed to log in.", { id: toastId });
+                return;
+            }
 
-            const res = await promise;
+            toast.success("Logged in successfully!", { id: toastId });
 
             if (res?.redirectUrl) {
                 router.replace(res.redirectUrl);
                 router.refresh();
             }
-        } catch (err) {
+        } catch (err: any) {
+            // Catches direct network/unhandled server crashes
+            toast.error(err?.message || "Network error. Please try again.", { id: toastId });
         }
     };
 

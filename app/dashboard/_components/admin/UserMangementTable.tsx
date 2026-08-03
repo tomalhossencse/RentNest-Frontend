@@ -50,7 +50,7 @@ export default function UserManagementTable({ users: initialUsers }: UserManagem
                     currentStatus === "ACTIVE" ? "User has been blocked successfully." : "User status set to active."
                 );
             } else {
-                toast.error(res?.message || "Failed to update user status.");
+                toast.error("Failed to update user status.");
             }
         } catch (error) {
             toast.error("An error occurred while updating status.");

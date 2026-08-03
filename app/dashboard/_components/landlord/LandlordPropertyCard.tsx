@@ -79,7 +79,7 @@ export const LandlordPropertyCard = ({
                 toast.success(`Propery updated to ${status.toLowerCase()} successfully`)
                 router.refresh()
             } else {
-                toast.error(res?.message || "Failed to update status")
+                toast.error("Failed to update status")
             }
         } catch (error) {
             console.error("Failed to update status:", error)
@@ -98,7 +98,7 @@ export const LandlordPropertyCard = ({
                 toast.success(`Property deleted successfully`)
                 router.refresh()
             } else {
-                toast.error(res?.message || "Failed to delete status")
+                toast.error("Failed to delete status")
             }
             router.refresh()
         } catch (error) {

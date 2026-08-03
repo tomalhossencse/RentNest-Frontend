@@ -40,7 +40,7 @@ export function RequestCard({ req, onPayment }: RequestCardProps) {
                     if (onPayment) onPayment()
                     router.push(res.data?.gatewayPageURL || "/dashboard")
                 } else {
-                    toast.error(res?.message || "Failed to create payment")
+                    toast.error("Failed to create payment")
                 }
             } catch (error) {
                 toast.error("An unexpected error occurred")

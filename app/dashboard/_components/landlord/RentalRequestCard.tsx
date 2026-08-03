@@ -34,7 +34,7 @@ export function RentalRequestCard({ request, onRequestUpdated }: RentalRequestCa
                     if (onRequestUpdated) onRequestUpdated()
                     router.refresh()
                 } else {
-                    toast.error(res?.message || "Failed to update status")
+                    toast.error("Failed to update status")
                 }
             } catch (error) {
                 toast.error("An unexpected error occurred")
