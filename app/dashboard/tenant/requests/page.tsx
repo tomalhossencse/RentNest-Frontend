@@ -1,6 +1,3 @@
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-
 import { getTenantRequests } from "../../_actions/requestActions"
 import { IApiRentalRequests } from "@/lib/types"
 import RequestHistory from "../../_components/tenant/RequestHistory";

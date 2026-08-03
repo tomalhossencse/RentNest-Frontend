@@ -1,12 +1,10 @@
 'use server'
 import { RentalRequestFormData } from "@/lib/types";
+import { isRefreshTokenValid } from "@/services/refreshToken";
 import { revalidateTag } from "next/cache";
-import { cookies } from "next/headers";
 
 export const getTenantRequests = async () => {
-    const cookieStore = await cookies();
-
-    const accessToken = cookieStore.get("accessToken")?.value;
+    const accessToken = await isRefreshTokenValid()
 
     const res = await fetch(
         `${process.env.BACKEND_API_URL}/api/requests/tenant`,
@@ -32,10 +30,7 @@ export const addRequests = async (data: RentalRequestFormData, propertyId: strin
         ...data,
         propertyId
     };
-
-    const cookieStore = await cookies();
-
-    const accessToken = cookieStore.get("accessToken")?.value;
+    const accessToken = await isRefreshTokenValid()
 
     const res = await fetch(`${process.env.BACKEND_API_URL}/api/requests`, {
         method: "POST",
@@ -59,9 +54,7 @@ export const addRequests = async (data: RentalRequestFormData, propertyId: strin
 };
 
 export const getLandlordRequests = async () => {
-    const cookieStore = await cookies();
-
-    const accessToken = cookieStore.get("accessToken")?.value;
+    const accessToken = await isRefreshTokenValid()
 
     const res = await fetch(
         `${process.env.BACKEND_API_URL}/api/requests/landlord`,
@@ -84,9 +77,7 @@ export const getLandlordRequests = async () => {
 
 export const updateRequestStatus = async (status: string, requestId: string) => {
 
-    const cookieStore = await cookies();
-
-    const accessToken = cookieStore.get("accessToken")?.value;
+    const accessToken = await isRefreshTokenValid()
 
     const res = await fetch(`${process.env.BACKEND_API_URL}/api/requests/landlord/${requestId}`, {
         method: "PATCH",

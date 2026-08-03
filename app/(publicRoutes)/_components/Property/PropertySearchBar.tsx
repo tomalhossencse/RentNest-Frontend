@@ -93,10 +93,10 @@ export function PropertySearchBar() {
         }, 500);
     };
 
-    const handleChange = (key: string, value: string) => {
+    const handleChange = (key: string, value: string | null) => {
         const params = new URLSearchParams(searchParams.toString());
 
-        if (value) {
+        if (value && value !== "all") {
             params.set(key, value);
         } else {
             params.delete(key);
@@ -148,7 +148,10 @@ export function PropertySearchBar() {
 
                 {/* Category Select */}
                 <div className="md:col-span-2">
-                    <Select value={searchParams.get('category') || ""} onValueChange={(value: string) => handleChange("category", value)}>
+                    <Select
+                        value={searchParams.get('category') || "all"}
+                        onValueChange={(value) => handleChange("category", value as string)}
+                    >
                         <SelectTrigger className="h-11 w-full border-border/40 text-sm font-medium">
                             <div className="flex items-center gap-2 truncate">
                                 <Home className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -156,7 +159,7 @@ export function PropertySearchBar() {
                             </div>
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="">All Types</SelectItem>
+                            <SelectItem value="all">All Types</SelectItem>
                             {categories.map((cat) => (
                                 <SelectItem key={cat} value={cat}>{cat}</SelectItem>
                             ))}
@@ -166,7 +169,10 @@ export function PropertySearchBar() {
 
                 {/* Division Select */}
                 <div className="md:col-span-2">
-                    <Select value={searchParams.get('division') || ""} onValueChange={(value: string) => handleChange("division", value)}>
+                    <Select
+                        value={searchParams.get('division') || "all"}
+                        onValueChange={(value) => handleChange("division", value as string)}
+                    >
                         <SelectTrigger className="h-11 w-full border-border/40 text-sm font-medium">
                             <div className="flex items-center gap-2 truncate">
                                 <MapPin className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -174,7 +180,7 @@ export function PropertySearchBar() {
                             </div>
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="">All Bangladesh</SelectItem>
+                            <SelectItem value="all">All Bangladesh</SelectItem>
                             {Object.keys(DIVISION_DISTRICT_MAP).map((division) => (
                                 <SelectItem key={division} value={division}>{division}</SelectItem>
                             ))}
@@ -184,7 +190,10 @@ export function PropertySearchBar() {
 
                 {/* District Select */}
                 <div className="md:col-span-2">
-                    <Select value={searchParams.get('district') || ""} onValueChange={(value: string) => handleChange("district", value)}>
+                    <Select
+                        value={searchParams.get('district') || "all"}
+                        onValueChange={(value) => handleChange("district", value as string)}
+                    >
                         <SelectTrigger className="h-11 w-full border-border/40 text-sm font-medium">
                             <div className="flex items-center gap-2 truncate">
                                 <MapPin className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -192,7 +201,7 @@ export function PropertySearchBar() {
                             </div>
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="">All Districts</SelectItem>
+                            <SelectItem value="all">All Districts</SelectItem>
                             {availableDistricts.map((district) => (
                                 <SelectItem key={district} value={district}>{district}</SelectItem>
                             ))}

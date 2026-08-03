@@ -1,14 +1,13 @@
 "use server"
 
+import { isRefreshTokenValid } from "@/services/refreshToken";
 import { revalidateTag } from "next/cache";
-import { cookies } from "next/headers";
 
 export const toggleUserStatus = async (userId: string, status: string) => {
     console.log("Toggling user status for userId:", userId, "to status:", status);
     const payload = { status };
-    const cookieStore = await cookies();
 
-    const accessToken = cookieStore.get("accessToken")?.value;
+    const accessToken = await isRefreshTokenValid()
 
     const res = await fetch(
         `${process.env.BACKEND_API_URL}/api/auth/users/${userId}`,
@@ -34,9 +33,7 @@ export const toggleUserStatus = async (userId: string, status: string) => {
 
 
 export const getAllUsers = async () => {
-    const cookieStore = await cookies();
-
-    const accessToken = cookieStore.get("accessToken")?.value;
+    const accessToken = await isRefreshTokenValid()
 
     const res = await fetch(
         `${process.env.BACKEND_API_URL}/api/auth/users`,

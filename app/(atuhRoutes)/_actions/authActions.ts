@@ -2,8 +2,9 @@
 import { LoginFormData, RegisterFormData } from "@/lib/types";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-export const loginAction = async (data: LoginFormData) => {
+export const loginAction = async (data: LoginFormData, redirectUrl: string | null) => {
 
     const payload = {
         ...data
@@ -38,11 +39,21 @@ export const loginAction = async (data: LoginFormData) => {
 
         const decodeToken = jwt.decode(result.data.accessToken) as JwtPayload;
 
-        let redirectUrl = "/dashboard/tenant";
+        if (
+            redirectUrl &&
+            typeof redirectUrl === "string" &&
+            redirectUrl.startsWith("/") &&
+            !redirectUrl.startsWith("//")
+        ) {
+            redirect(redirectUrl, "replace");
+        }
+
         if (decodeToken.role === "ADMIN") {
             redirectUrl = "/dashboard/admin";
         } else if (decodeToken.role === "LANDLORD") {
             redirectUrl = "/dashboard/landlord";
+        } else {
+            redirectUrl = "/dashboard/tenant";
         }
 
         return { success: true, redirectUrl };

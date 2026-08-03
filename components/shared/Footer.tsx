@@ -138,7 +138,7 @@ export default function Footer() {
 
                 {/* Bottom Bar */}
                 <div className="mt-12 border-t border-border pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
-                    <p>© {currentYear} YourApp Inc. All rights reserved.</p>
+                    <p>© {currentYear} RentNest Inc. All rights reserved.</p>
                     <div className="flex items-center gap-6">
                         <Link href="/privacy" className="hover:underline">Privacy</Link>
                         <Link href="/terms" className="hover:underline">Terms</Link>

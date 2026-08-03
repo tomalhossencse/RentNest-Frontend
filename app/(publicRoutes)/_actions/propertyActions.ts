@@ -1,8 +1,8 @@
 "use server";
 
 import { CreatePropertyFormData, IProperty, PropertiesResponse } from "@/lib/types";
+import { isRefreshTokenValid } from "@/services/refreshToken";
 import { revalidateTag } from "next/cache";
-import { cookies } from "next/headers";
 import { toast } from "sonner";
 
 
@@ -124,9 +124,7 @@ export const getLandlordProperties = async ({
 
     const queryString = params.toString();
 
-    const cookieStore = await cookies();
-
-    const accessToken = cookieStore.get("accessToken")?.value;
+    const accessToken = await isRefreshTokenValid()
 
     const res = await fetch(
         `${process.env.BACKEND_API_URL}/api/properties/landlord/all?limit=6${queryString ? `&${queryString}` : ""}`,
@@ -149,9 +147,7 @@ export const getLandlordProperties = async ({
 
 
 export const addProperty = async (payload: CreatePropertyFormData) => {
-    const cookieStore = await cookies();
-
-    const accessToken = cookieStore.get("accessToken")?.value;
+    const accessToken = await isRefreshTokenValid()
 
     const res = await fetch(`${process.env.BACKEND_API_URL}/api/properties`, {
         method: "POST",
@@ -180,9 +176,7 @@ export const addProperty = async (payload: CreatePropertyFormData) => {
 
 
 export const updateProperty = async (payload: CreatePropertyFormData, propertyId: string) => {
-    const cookieStore = await cookies();
-
-    const accessToken = cookieStore.get("accessToken")?.value;
+    const accessToken = await isRefreshTokenValid()
 
     const res = await fetch(`${process.env.BACKEND_API_URL}/api/properties/${propertyId}`, {
         method: "PUT",
@@ -210,9 +204,7 @@ export const updateProperty = async (payload: CreatePropertyFormData, propertyId
 };
 
 export const updatePropertyStatus = async (status: string, propertyId: string) => {
-    const cookieStore = await cookies();
-
-    const accessToken = cookieStore.get("accessToken")?.value;
+    const accessToken = await isRefreshTokenValid()
 
     const res = await fetch(`${process.env.BACKEND_API_URL}/api/properties/status/${propertyId}`, {
         method: "PATCH",
@@ -241,9 +233,7 @@ export const updatePropertyStatus = async (status: string, propertyId: string) =
 
 
 export const deleteProperty = async (propertyId: string) => {
-    const cookieStore = await cookies();
-
-    const accessToken = cookieStore.get("accessToken")?.value;
+    const accessToken = await isRefreshTokenValid()
 
     const res = await fetch(`${process.env.BACKEND_API_URL}/api/properties/${propertyId}`, {
         method: "DELETE",

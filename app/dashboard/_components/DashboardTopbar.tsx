@@ -59,6 +59,20 @@ export function DashboardTopbar({ onMobileMenuToggle, user }: TopbarProps) {
             router.push("/")
         }
 
+
+        if (action === "profile") {
+            if (user.data.role === "TENANT") {
+                router.push("/dashboard/tenant/profile")
+            }
+            else if (user.data.role === "LANDLORD") {
+                router.push("/dashboard/landlord/profile")
+            }
+            else if (user.data.role === "ADMIN") {
+                router.push("/dashboard/admin/profile")
+            }
+            return;
+        }
+
         if (action === "logout") {
             await logout();
             toast.success("User Logged Out Successfully!");

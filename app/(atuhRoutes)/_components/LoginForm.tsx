@@ -12,10 +12,12 @@ import { loginAction } from '../_actions/authActions'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { loginSchema } from '@/lib/validations/login.validation'
 import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 const LoginFrom = () => {
     const router = useRouter()
+    const searchParams = useSearchParams();
+    const redirectUrl = searchParams.get("redirectUrl");
 
     const {
         register,
@@ -27,7 +29,7 @@ const LoginFrom = () => {
 
     const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
         try {
-            const promise = loginAction(data);
+            const promise = loginAction(data, redirectUrl);
 
             toast.promise(promise, {
                 loading: "Logging in...",

@@ -1,16 +1,13 @@
 "use server"
 
+import { isRefreshTokenValid } from "@/services/refreshToken";
 import { revalidateTag } from "next/cache";
-import { cookies } from "next/headers";
 
 export const createPayment = async (requestId: string) => {
     const payload = {
         requestId
     };
-
-    const cookieStore = await cookies();
-
-    const accessToken = cookieStore.get("accessToken")?.value;
+    const accessToken = await isRefreshTokenValid()
 
     const res = await fetch(`${process.env.BACKEND_API_URL}/api/payments/create`, {
         method: "POST",

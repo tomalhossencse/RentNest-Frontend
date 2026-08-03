@@ -62,7 +62,7 @@ export function Navbar({ user }: { user: NavbarProps }) {
         }
 
         if (action === "profile") {
-            router.push("/profile");
+            router.push("/dashboard/profile");
             return;
         }
 
@@ -103,8 +103,8 @@ export function Navbar({ user }: { user: NavbarProps }) {
                                     key={item.href}
                                     href={item.href}
                                     className={`px-5 py-2 text-sm font-semibold rounded-full transition-all duration-200 ${isActive
-                                            ? "bg-background text-foreground shadow-xs border border-border/60"
-                                            : "text-muted-foreground hover:text-foreground hover:bg-background/60"
+                                        ? "bg-background text-foreground shadow-xs border border-border/60"
+                                        : "text-muted-foreground hover:text-foreground hover:bg-background/60"
                                         }`}
                                 >
                                     {item.label}
@@ -203,8 +203,8 @@ export function Navbar({ user }: { user: NavbarProps }) {
                                     href={item.href}
                                     onClick={() => setMobileMenuOpen(false)}
                                     className={`block px-4 py-2.5 text-sm font-semibold rounded-lg transition-colors ${isActive
-                                            ? "bg-primary/10 text-primary"
-                                            : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                                        ? "bg-primary/10 text-primary"
+                                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
                                         }`}
                                 >
                                     {item.label}

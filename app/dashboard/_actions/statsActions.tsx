@@ -1,9 +1,7 @@
-import { cookies } from "next/headers";
+import { isRefreshTokenValid } from "@/services/refreshToken";
 
 export const getLandlordStats = async () => {
-    const cookieStore = await cookies();
-
-    const accessToken = cookieStore.get("accessToken")?.value;
+    const accessToken = await isRefreshTokenValid()
 
     const res = await fetch(
         `${process.env.BACKEND_API_URL}/api/properties/landlord/stats`,
@@ -25,9 +23,7 @@ export const getLandlordStats = async () => {
 };
 
 export const getTenantStats = async () => {
-    const cookieStore = await cookies();
-
-    const accessToken = cookieStore.get("accessToken")?.value;
+    const accessToken = await isRefreshTokenValid()
 
     const res = await fetch(
         `${process.env.BACKEND_API_URL}/api/properties/tenant/stats`,
@@ -49,9 +45,7 @@ export const getTenantStats = async () => {
 };
 
 export const getAdminStats = async () => {
-    const cookieStore = await cookies();
-
-    const accessToken = cookieStore.get("accessToken")?.value;
+    const accessToken = await isRefreshTokenValid()
 
     const res = await fetch(
         `${process.env.BACKEND_API_URL}/api/properties/admin/stats`,
