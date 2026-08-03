@@ -1,4 +1,4 @@
-import { getLandlordProperties } from "../_actions/propertyActions"
+import { getLandlordProperties, getProperties } from "../_actions/propertyActions"
 import { Paginations } from "../_components/Property/Pagination";
 import { PropertyListing } from "../_components/Property/PropertyListing"
 import { PropertySearchBar } from "../_components/Property/PropertySearchBar"
@@ -10,7 +10,7 @@ const PropertiesPage = async ({
 }) => {
     const query = await searchParams
 
-    const result = await getLandlordProperties({ query })
+    const result = await getProperties({ query })
 
 
     return (

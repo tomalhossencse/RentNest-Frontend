@@ -30,94 +30,11 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Division } from "@/lib/types";
+import { Division, DIVISION_DISTRICT_MAP } from "@/lib/types";
 
 
 const categories = ["Apartment", "House", "Studio", "Office", "Shop", "Warehouse", "Room", "Stadium"]
 
-
-const DIVISION_DISTRICT_MAP = {
-    DHAKA: [
-        "DHAKA",
-        "GAZIPUR",
-        "NARAYANGANJ",
-        "NARSINGDI",
-        "MUNSHIGANJ",
-        "MANIKGANJ",
-        "TANGAIL",
-        "KISHOREGANJ",
-        "FARIDPUR",
-        "GOPALGANJ",
-        "MADARIPUR",
-        "RAJBARI",
-        "SHARIATPUR",
-    ],
-    CHATTOGRAM: [
-        "CHATTOGRAM",
-        "CUMILLA",
-        "BRAHMANBARIA",
-        "CHANDPUR",
-        "FENI",
-        "LAKSHMIPUR",
-        "NOAKHALI",
-        "COXS_BAZAR",
-        "KHAGRACHHARI",
-        "RANGAMATI",
-        "BANDARBAN",
-    ],
-    RAJSHAHI: [
-        "RAJSHAHI",
-        "BOGURA",
-        "JOYPURHAT",
-        "NAOGAON",
-        "NATORE",
-        "CHAPAINAWABGANJ",
-        "PABNA",
-        "SIRAJGANJ",
-    ],
-    KHULNA: [
-        "KHULNA",
-        "JASHORE",
-        "SATKHIRA",
-        "BAGERHAT",
-        "NARAIL",
-        "MAGURA",
-        "JHENAIDAH",
-        "KUSHTIA",
-        "CHUADANGA",
-        "MEHERPUR",
-    ],
-    BARISHAL: [
-        "BARISHAL",
-        "BHOLA",
-        "JHALOKATHI",
-        "PATUAKHALI",
-        "PIROJPUR",
-        "BARGUNA",
-    ],
-    SYLHET: [
-        "SYLHET",
-        "HABIGANJ",
-        "MOULVIBAZAR",
-        "SUNAMGANJ",
-    ],
-    RANGPUR: [
-        "RANGPUR",
-        "DINAJPUR",
-        "THAKURGAON",
-        "PANCHAGARH",
-        "NILPHAMARI",
-        "LALMONIRHAT",
-        "KURIGRAM",
-        "GAIBANDHA",
-    ],
-    MYMENSINGH: [
-        "MYMENSINGH",
-        "JAMALPUR",
-        "SHERPUR",
-        "NETROKONA",
-    ],
-} as const;
 
 const SORT_OPTIONS = [
     { label: 'Date Added (Newest)', sortBy: 'createdAt', sortOrder: 'desc' },

@@ -33,6 +33,7 @@ export function RentalRequestModal({
     propertyTitle,
     onSubmitRequest,
 }: RentalRequestModalProps) {
+
     const {
         register,
         handleSubmit,

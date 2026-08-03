@@ -4,10 +4,12 @@ import { registerSchema } from "./validations/register.validation";
 import { rentalRequestSchema } from "./validations/request.validation";
 import { ForwardRefExoticComponent, RefAttributes } from "react";
 import { LucideProps } from "lucide-react";
+import { createPropertySchema } from "./validations/property.validation";
 
 export type LoginFormData = z.infer<typeof loginSchema>;
 export type RegisterFormData = z.infer<typeof registerSchema>;
 export type RentalRequestFormData = z.infer<typeof rentalRequestSchema>;
+export type CreatePropertyFormData = z.infer<typeof createPropertySchema>;
 
 export interface userApiResponse<T> {
     success: boolean;
@@ -76,6 +78,7 @@ export interface IProperty {
     division: Division;
     district: string;
     address: string;
+    categoryId: string;
     description: string;
     status: PropertyStatus;
     floor: number;
@@ -207,3 +210,87 @@ export interface AdminGlobalState {
     totalRentals: number;
     successfulPaymentsCount: number;
 }
+
+
+export const DIVISION_DISTRICT_MAP = {
+    DHAKA: [
+        "DHAKA",
+        "GAZIPUR",
+        "NARAYANGANJ",
+        "NARSINGDI",
+        "MUNSHIGANJ",
+        "MANIKGANJ",
+        "TANGAIL",
+        "KISHOREGANJ",
+        "FARIDPUR",
+        "GOPALGANJ",
+        "MADARIPUR",
+        "RAJBARI",
+        "SHARIATPUR",
+    ],
+    CHATTOGRAM: [
+        "CHATTOGRAM",
+        "CUMILLA",
+        "BRAHMANBARIA",
+        "CHANDPUR",
+        "FENI",
+        "LAKSHMIPUR",
+        "NOAKHALI",
+        "COXS_BAZAR",
+        "KHAGRACHHARI",
+        "RANGAMATI",
+        "BANDARBAN",
+    ],
+    RAJSHAHI: [
+        "RAJSHAHI",
+        "BOGURA",
+        "JOYPURHAT",
+        "NAOGAON",
+        "NATORE",
+        "CHAPAINAWABGANJ",
+        "PABNA",
+        "SIRAJGANJ",
+    ],
+    KHULNA: [
+        "KHULNA",
+        "JASHORE",
+        "SATKHIRA",
+        "BAGERHAT",
+        "NARAIL",
+        "MAGURA",
+        "JHENAIDAH",
+        "KUSHTIA",
+        "CHUADANGA",
+        "MEHERPUR",
+    ],
+    BARISHAL: [
+        "BARISHAL",
+        "BHOLA",
+        "JHALOKATHI",
+        "PATUAKHALI",
+        "PIROJPUR",
+        "BARGUNA",
+    ],
+    SYLHET: [
+        "SYLHET",
+        "HABIGANJ",
+        "MOULVIBAZAR",
+        "SUNAMGANJ",
+    ],
+    RANGPUR: [
+        "RANGPUR",
+        "DINAJPUR",
+        "THAKURGAON",
+        "PANCHAGARH",
+        "NILPHAMARI",
+        "LALMONIRHAT",
+        "KURIGRAM",
+        "GAIBANDHA",
+    ],
+    MYMENSINGH: [
+        "MYMENSINGH",
+        "JAMALPUR",
+        "SHERPUR",
+        "NETROKONA",
+    ],
+} as const;

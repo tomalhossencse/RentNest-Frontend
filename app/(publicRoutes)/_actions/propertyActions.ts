@@ -210,6 +210,36 @@ export const updateProperty = async (payload: PropertyFormData, propertyId: stri
     return result;
 };
 
+export const updatePropertyStatus = async (status: string, propertyId: string) => {
+    const cookieStore = await cookies();
+
+    const accessToken = cookieStore.get("accessToken")?.value;
+
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/properties/status/${propertyId}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            Cookie: `accessToken=${accessToken}`,
+        },
+        body: JSON.stringify({ status }),
+    });
+
+    const result = await res.json();
+
+    if (result?.success) {
+        revalidateTag("landlord-properties", {
+            expire: 0,
+        });
+    }
+    if (result?.success) {
+        revalidateTag("properties", {
+            expire: 0,
+        });
+    }
+
+    return result;
+};
+
 
 export const deleteProperty = async (propertyId: string) => {
     const cookieStore = await cookies();
