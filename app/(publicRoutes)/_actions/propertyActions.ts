@@ -1,7 +1,6 @@
 "use server";
 
-import { PropertyFormData } from "@/app/dashboard/_components/landlord/PropertyModal";
-import { IProperty, PropertiesResponse } from "@/lib/types";
+import { CreatePropertyFormData, IProperty, PropertiesResponse } from "@/lib/types";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { toast } from "sonner";
@@ -149,7 +148,7 @@ export const getLandlordProperties = async ({
 };
 
 
-export const addProperty = async (payload: PropertyFormData) => {
+export const addProperty = async (payload: CreatePropertyFormData) => {
     const cookieStore = await cookies();
 
     const accessToken = cookieStore.get("accessToken")?.value;
@@ -180,7 +179,7 @@ export const addProperty = async (payload: PropertyFormData) => {
 };
 
 
-export const updateProperty = async (payload: PropertyFormData, propertyId: string) => {
+export const updateProperty = async (payload: CreatePropertyFormData, propertyId: string) => {
     const cookieStore = await cookies();
 
     const accessToken = cookieStore.get("accessToken")?.value;
