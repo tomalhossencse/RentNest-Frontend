@@ -175,7 +175,35 @@ export interface ITenantStats {
     totalPayments: number;
 }
 
+
 export type ILandlordStatsResponse = userApiResponse<ILandlordStats>;
 export type ITenantStatsResponse = userApiResponse<ITenantStats>;
 
+export interface IUser {
+    id: string;
+    name: string;
+    email: string;
+    status: "ACTIVE" | "BLOCKED";
+    role: "ADMIN" | "LANDLORD" | "TENANT";
+    profilePhoto: string | null;
+    bio: string | null;
+    createdAt: string;
+    updatedAt: string;
+}
 
+export type IUsersResponse = userApiResponse<IUser[]>;
+
+export interface AdminGlobalState {
+    totalRevenue: number;
+    totalUsers: number;
+    totalTenants: number;
+    totalLandlords: number;
+    blockedUsers: number;
+    totalProperties: number;
+    pendingProperties: number;
+    activeProperties: number;
+    totalApplications: number;
+    pendingApplications: number;
+    totalRentals: number;
+    successfulPaymentsCount: number;
+}

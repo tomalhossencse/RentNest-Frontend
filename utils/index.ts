@@ -22,4 +22,12 @@ export const formatDateTime = (dateString?: string | Date) => {
     })
 }
 
+export const formatprofileAvatar = (name: string) => {
+    return name.toUpperCase().split(" ").map(word => word.charAt(0)).concat()
+}
+
+export const formatName = (name: string) => {
+    return name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+}
+
 

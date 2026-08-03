@@ -1,7 +1,7 @@
 import { INavItem } from "@/lib/types";
-import { Settings, ShieldCheck } from "lucide-react";
+import { ShieldCheck, Users } from "lucide-react";
 
 export const adminNavs: INavItem[] = [
     { label: "Admin Panel", href: "/dashboard/admin", icon: ShieldCheck },
-    { label: "Settings", href: "/dashboard/settings", icon: Settings },
+    { label: "Manage Users", href: "/dashboard/admin/manage-users", icon: Users },
 ]

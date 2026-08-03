@@ -5,5 +5,4 @@ export const landlordNavs: INavItem[] = [
     { label: "Dashboard", href: "/dashboard/landlord", icon: Home },
     { label: "My Properties", href: "/dashboard/landlord/properties", icon: Building2 },
     { label: "Landlord Requests", href: "/dashboard/landlord/requests", icon: FileText },
-    { label: "Settings", href: "/dashboard/settings", icon: Settings },
 ]

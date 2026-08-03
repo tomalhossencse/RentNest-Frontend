@@ -23,6 +23,7 @@ export function DashboardShell({ user, children }: DashboardShellProps) {
 
             <div className="flex flex-1 flex-col md:pl-72 min-w-0">
                 <DashboardTopbar
+                    user={user}
                     onMobileMenuToggle={() => setMobileOpen((prev) => !prev)}
                 />
                 <main className="flex-1 p-4 md:p-8 lg:p-10">{children}</main>
