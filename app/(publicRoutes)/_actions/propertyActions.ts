@@ -1,6 +1,8 @@
 "use server";
 
+import { PropertyFormData } from "@/app/dashboard/_components/landlord/PropertyModal";
 import { IProperty, PropertiesResponse } from "@/lib/types";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { toast } from "sonner";
 
@@ -128,7 +130,7 @@ export const getLandlordProperties = async ({
     const accessToken = cookieStore.get("accessToken")?.value;
 
     const res = await fetch(
-        `${process.env.BACKEND_API_URL}/api/properties/landlord/all?limit=8${queryString ? `&${queryString}` : ""}`,
+        `${process.env.BACKEND_API_URL}/api/properties/landlord/all?limit=6${queryString ? `&${queryString}` : ""}`,
         {
             headers: {
                 Cookie: `accessToken=${accessToken}`,
@@ -145,4 +147,96 @@ export const getLandlordProperties = async ({
 
     return result;
 };
+
+
+export const addProperty = async (payload: PropertyFormData) => {
+    const cookieStore = await cookies();
+
+    const accessToken = cookieStore.get("accessToken")?.value;
+
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/properties`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Cookie: `accessToken=${accessToken}`,
+        },
+        body: JSON.stringify(payload),
+    });
+
+    const result = await res.json();
+
+    if (result?.success) {
+        revalidateTag("landlord-properties", {
+            expire: 0,
+        });
+    }
+    if (result?.success) {
+        revalidateTag("properties", {
+            expire: 0,
+        });
+    }
+
+    return result;
+};
+
+
+export const updateProperty = async (payload: PropertyFormData, propertyId: string) => {
+    const cookieStore = await cookies();
+
+    const accessToken = cookieStore.get("accessToken")?.value;
+
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/properties/${propertyId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            Cookie: `accessToken=${accessToken}`,
+        },
+        body: JSON.stringify(payload),
+    });
+
+    const result = await res.json();
+
+    if (result?.success) {
+        revalidateTag("landlord-properties", {
+            expire: 0,
+        });
+    }
+    if (result?.success) {
+        revalidateTag("properties", {
+            expire: 0,
+        });
+    }
+
+    return result;
+};
+
+
+export const deleteProperty = async (propertyId: string) => {
+    const cookieStore = await cookies();
+
+    const accessToken = cookieStore.get("accessToken")?.value;
+
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/properties/${propertyId}`, {
+        method: "DELETE",
+        headers: {
+            Cookie: `accessToken=${accessToken}`,
+        },
+    });
+
+    const result = await res.json();
+
+    if (result?.success) {
+        revalidateTag("landlord-properties", {
+            expire: 0,
+        });
+    }
+    if (result?.success) {
+        revalidateTag("properties", {
+            expire: 0,
+        });
+    }
+
+    return result;
+};
+
 
