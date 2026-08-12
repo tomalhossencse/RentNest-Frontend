@@ -29,6 +29,7 @@ import {
 import { logout } from "@/services/logout";
 import { NavbarProps } from "@/lib/types";
 import { formatName, formatprofileAvatar } from "@/utils";
+import { ThemeHotkey } from "../theme-provider";
 
 // Navigation links configuration
 const navItems = [
@@ -99,6 +100,7 @@ export function Navbar({ user }: { user: NavbarProps }) {
                         {navItems.map((item) => {
                             const isActive = pathname === item.href;
                             return (
+
                                 <Link
                                     key={item.href}
                                     href={item.href}
@@ -109,8 +111,11 @@ export function Navbar({ user }: { user: NavbarProps }) {
                                 >
                                     {item.label}
                                 </Link>
+
+
                             );
                         })}
+                        <ThemeHotkey />
                     </div>
 
                     {/* 3. User Avatar / Login Action */}

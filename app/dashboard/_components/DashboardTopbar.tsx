@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation"
 import { logout } from "@/services/logout"
 import { toast } from "sonner"
 import Link from "next/link"
+import { ThemeHotkey } from "@/components/theme-provider"
 
 
 const userMenuItems = [
@@ -103,6 +104,8 @@ export function DashboardTopbar({ onMobileMenuToggle, user }: TopbarProps) {
 
             {/* Right Controls */}
             <div className="flex items-center gap-2 md:gap-4">
+                {/* theme toggle */}
+                <ThemeHotkey />
                 {/* Notification Bell */}
                 <Button
                     variant="outline"

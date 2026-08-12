@@ -36,16 +36,15 @@ export function RequestCard({ req, onPayment }: RequestCardProps) {
             try {
                 const res = (await createPayment(req.id))
                 if (res?.success) {
-                    toast.success(`Payment created successfully`)
+                    toast.success(res?.message || `Payment created successfully`)
                     if (onPayment) onPayment()
                     router.push(res.data?.gatewayPageURL || "/dashboard")
                 } else {
-                    toast.error("Failed to create payment")
+                    toast.error(res?.message || "Failed to create payment")
                 }
             } catch (error) {
                 toast.error("An unexpected error occurred")
                 console.error(error)
-            } finally {
             }
         })
     }

@@ -20,9 +20,6 @@ export const loginAction = async (data: LoginFormData, redirectUrl: string | nul
 
     const result = await res.json();
 
-    if (!res.ok || !result.success) {
-        throw new Error(result.message || "Invalid credentials");
-    }
 
     if (result.success) {
         const cookieStore = await cookies();
