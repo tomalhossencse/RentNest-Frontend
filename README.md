@@ -8,6 +8,15 @@ The frontend is built with **Next.js App Router, TypeScript, Tailwind CSS, and m
 
 ---
 
+## 🔗 Project Links
+
+* 🌐 **Live Application:** [RentNest](https://rentnestbd.vercel.app/)
+* 💻 **Frontend Repository:** [RentNest Frontend](https://github.com/tomalhossencse/RentNest-Frontend)
+* ⚙️ **Backend Repository:** [RentNest Backend](https://github.com/tomalhossencse/RentNest)
+* 📋 **API Integration:** [API_INTEGRATION.md](./API_INTEGRATION.md)
+
+---
+
 ## ✨ Key Features
 
 ### 🔎 Property Search & Filtering
@@ -134,7 +143,7 @@ Examples include:
 * Profile operations
 * Payment-related operations
 
-This keeps the UI components focused on presentation while moving server-side operations into dedicated action modules.
+This keeps UI components focused on presentation while moving server-side operations into dedicated action modules.
 
 ---
 
@@ -142,7 +151,7 @@ This keeps the UI components focused on presentation while moving server-side op
 
 RentNest uses Next.js caching and revalidation capabilities to keep the UI synchronized with backend data.
 
-### Key techniques
+### Key Techniques
 
 * Server-side data fetching
 * On-demand cache invalidation
@@ -150,8 +159,6 @@ RentNest uses Next.js caching and revalidation capabilities to keep the UI synch
 * Tag-based cache management
 * Reduced unnecessary API requests
 * Immediate UI updates after mutations
-
-For example, after a successful mutation, the relevant cache tag can be revalidated so that the updated information is reflected without requiring unnecessary full-page refreshes.
 
 ---
 
@@ -177,7 +184,7 @@ For example, after a successful mutation, the relevant cache tag can be revalida
 * **Fetch / Axios**
 * **REST API**
 * **JWT Authentication**
-* **Cookie-based authentication**
+* **Cookie-based Authentication**
 
 ### Notifications
 
@@ -205,11 +212,10 @@ RENTNEST-FRONTEND/
 │   │   └── properties/
 │   │
 │   ├── dashboard/
-│   │   │
 │   │   ├── _actions/
 │   │   ├── _components/
 │   │   ├── _config/
-│   │   │
+│   │
 │   │   ├── admin/
 │   │   │   ├── manage-users/
 │   │   │   ├── profile/
@@ -260,7 +266,11 @@ RENTNEST-FRONTEND/
 
 ## 🔗 Backend Integration
 
-RentNest uses a **separated frontend and backend architecture**.
+RentNest follows a **separated frontend and backend architecture**.
+
+The frontend is responsible for the user interface, client interactions, server actions, and API communication, while the backend handles authentication, business logic, database operations, and other server-side responsibilities.
+
+### Architecture
 
 ```text
 ┌─────────────────────────────────┐
@@ -292,7 +302,11 @@ RentNest uses a **separated frontend and backend architecture**.
          └───────────────┘
 ```
 
-The backend is **not included in this repository**.
+### Backend Repository
+
+The backend is maintained separately from this frontend repository.
+
+👉 **[View RentNest Backend Repository](https://github.com/tomalhossencse/RentNest)**
 
 The frontend communicates with the backend through the API service layer located in:
 
@@ -308,15 +322,23 @@ API_INTEGRATION.md
 
 ---
 
-## 🌐 Environment Variables
+## 🌐 Live Application
 
-Create a `.env` file in the root directory:
+The deployed RentNest application is available at:
+
+👉 **[Visit RentNest](https://rentnestbd.vercel.app/)**
+
+---
+
+## 🔐 Environment Variables
+
+Create a `.env` file in the project root:
 
 ```env
 NEXT_PUBLIC_API_URL=your_backend_api_url
 ```
 
-For local development, it may look like:
+For local development:
 
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:5000/api
@@ -337,21 +359,12 @@ Make sure you have installed:
 * Git
 * A running instance of the RentNest backend API
 
----
-
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/tomalhossencse/RentNest-Frontend
-```
-
-Navigate into the project:
-
-```bash
+git clone https://github.com/tomalhossencse/RentNest-Frontend.git
 cd RentNest-Frontend
 ```
-
----
 
 ### 2. Install Dependencies
 
@@ -367,8 +380,6 @@ Or using pnpm:
 pnpm install
 ```
 
----
-
 ### 3. Configure Environment Variables
 
 Create a `.env` file:
@@ -377,9 +388,7 @@ Create a `.env` file:
 NEXT_PUBLIC_API_URL=http://localhost:5000/api
 ```
 
-Make sure the backend API is running and accessible from the frontend.
-
----
+Make sure the backend API is running and accessible.
 
 ### 4. Start the Development Server
 
@@ -397,29 +406,37 @@ http://localhost:3000
 
 ## 📜 Available Scripts
 
+### Development
+
 ```bash
 npm run dev
 ```
 
-Start the development server.
+Starts the development server.
+
+### Production Build
 
 ```bash
 npm run build
 ```
 
-Create an optimized production build.
+Creates an optimized production build.
+
+### Production Server
 
 ```bash
 npm run start
 ```
 
-Start the production server.
+Starts the production server.
+
+### Lint
 
 ```bash
 npm run lint
 ```
 
-Run ESLint to check the codebase.
+Runs ESLint to check the codebase.
 
 ---
 
@@ -461,9 +478,9 @@ revalidateTag()
 Updated UI
 ```
 
-This approach provides a clear separation between:
+This architecture provides a clear separation between:
 
-* UI
+* UI components
 * Server Actions
 * API communication
 * Backend business logic
@@ -473,13 +490,13 @@ This approach provides a clear separation between:
 
 ## 📋 API Integration
 
-All frontend-to-backend API mappings are documented in:
+Frontend-to-backend API mappings are documented in:
 
 ```text
 API_INTEGRATION.md
 ```
 
-The document helps developers understand which backend endpoints are used by different frontend features.
+This documentation provides a reference between frontend operations and the corresponding backend API endpoints.
 
 The frontend does not contain the backend implementation or database layer.
 
@@ -513,12 +530,12 @@ RentNest was designed with the following goals:
 * Provide role-specific dashboards
 * Give administrators centralized platform management
 * Maintain a scalable and maintainable frontend architecture
-* Separate frontend and backend responsibilities
+* Keep frontend and backend services independently maintainable
 * Provide a responsive experience across devices
 
 ---
 
-## 🧩 Design Principles
+## 🧩 Development Principles
 
 The frontend follows several development principles:
 
