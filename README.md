@@ -342,7 +342,7 @@ Make sure you have installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone [<frontend-repository-url>](https://github.com/tomalhossencse/RentNest-Frontend)
+git clone https://github.com/tomalhossencse/RentNest-Frontend
 ```
 
 Navigate into the project:
