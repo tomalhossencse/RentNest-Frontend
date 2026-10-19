@@ -3,6 +3,7 @@ import { CtaSection } from "./_components/Home/CtaSection"
 import { FeaturesSection } from "./_components/Home/FeaturesSection"
 import { HeroSection } from "./_components/Home/HeroSection"
 import { LatestPropertiesSection } from "./_components/Home/LatestPropertiesSection"
+import { NewsletterSection } from "./_components/Home/NewsletterSection"
 import { StatsSection } from "./_components/Home/StatsSection"
 
 async function getLatestProperties() {
@@ -59,6 +60,7 @@ export default async function HomePage() {
             <HeroSection />
             <LatestPropertiesSection properties={latestProperties} />
             <StatsSection />
+            <NewsletterSection />
             <FeaturesSection />
             <CtaSection />
         </div>
