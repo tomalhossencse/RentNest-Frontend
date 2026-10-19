@@ -1,5 +1,6 @@
 import { getProperties } from "./_actions/propertyActions"
 import { CtaSection } from "./_components/Home/CtaSection"
+import { CategoriesSection } from "./_components/Home/CategoriesSection"
 import { FeaturesSection } from "./_components/Home/FeaturesSection"
 import { HeroSection } from "./_components/Home/HeroSection"
 import { LatestPropertiesSection } from "./_components/Home/LatestPropertiesSection"
@@ -60,6 +61,7 @@ export default async function HomePage() {
             <HeroSection />
             <LatestPropertiesSection properties={latestProperties} />
             <StatsSection />
+            <CategoriesSection />
             <NewsletterSection />
             <FeaturesSection />
             <CtaSection />
