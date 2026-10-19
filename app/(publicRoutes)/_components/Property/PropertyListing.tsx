@@ -2,7 +2,7 @@ import { PropertiesResponse } from "@/lib/types";
 import PropertyCard from "./PropertyCard";
 import { toast } from "sonner";
 
-export async function PropertyListing({ result
+export default async function PropertyListing({ result
 }: {
     result: PropertiesResponse
 }) {

@@ -1,6 +1,6 @@
 import { getLandlordProperties } from "@/app/(publicRoutes)/_actions/propertyActions";
 import { Paginations } from "@/app/(publicRoutes)/_components/Property/Pagination";
-import { PropertySearchBar } from "@/app/(publicRoutes)/_components/Property/PropertySearchBar";
+import PropertySearchBar from "@/app/(publicRoutes)/_components/Property/PropertySearchBar";
 import { AddPropertyButton } from "../../_components/landlord/AddProperyButton";
 import LandlordPropertyListing from "../../_components/landlord/LandlordPropertyListing";
 const DashboardPropertiesPage = async ({

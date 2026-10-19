@@ -5,7 +5,7 @@ import { JwtPayload } from "jsonwebtoken";
 import { getNewAccessTokenByRefreshToken } from "./services/refreshToken";
 
 const AUTH_ROUTES = ["/login", "/register"];
-const PUBLIC_ROUTES = ["/", "/properties", "/properties/:id", "/contact"];
+const PUBLIC_ROUTES = ["/", "/properties", "/properties/:id", "/contact", "/support", "/about"];
 
 export async function proxy(request: NextRequest) {
 

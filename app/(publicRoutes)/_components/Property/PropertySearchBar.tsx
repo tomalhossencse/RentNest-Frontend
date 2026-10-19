@@ -44,7 +44,7 @@ const SORT_OPTIONS = [
     { label: 'Available Date (Latest)', sortBy: 'availableFrom', sortOrder: 'desc' },
 ] as const;
 
-export function PropertySearchBar() {
+export default function PropertySearchBar() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();

@@ -1,8 +1,10 @@
 "use server";
 
+import { unstable_noStore } from "next/cache";
 import { isRefreshTokenValid } from "./refreshToken";
 
 export const getMe = async () => {
+    unstable_noStore();
     const accessToken = await isRefreshTokenValid()
 
     if (!accessToken) {
@@ -16,12 +18,8 @@ export const getMe = async () => {
         headers: {
             Cookie: `accessToken=${accessToken}`,
         },
-        cache: "force-cache",
-        next: {
-            revalidate: 60 * 60 * 24,
-            tags: ["my-profile"],
-        },
     });
+
 
     const result = await res.json();
 
